@@ -170,6 +170,17 @@ void ConCommand_list(const CCommand& arg)
 	}
 }
 
+void ConCommand_differences(const CCommand& arg)
+{
+	// print cvars
+	for (auto& map : R2::g_pCVar->DumpToMap())
+	{
+		if(map.second->pszDefaultValue != map.second.GetString()){
+			PrintCommandHelpDialogue(map.second, map.second->m_pszName);
+		}
+	}
+}
+
 void InitialiseCommandPrint()
 {
 	RegisterConCommand("find", ConCommand_find, "Find concommands with the specified string in their name/help text.", FCVAR_NONE);
@@ -184,4 +195,8 @@ void InitialiseCommandPrint()
 	ConCommand* listCommand = R2::g_pCVar->FindCommand("convar_list");
 	listCommand->m_nFlags = FCVAR_NONE;
 	listCommand->m_pCommandCallback = ConCommand_list;
+
+	ConCommand* diffCommand = R2::g_pCVar->FindCommand("convar_differences");
+	diffCommand->m_nFlags = FCVAR_NONE;
+	diffCommand->m_pCommandCallback = ConCommand_differences;
 }
