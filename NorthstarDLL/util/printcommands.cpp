@@ -178,9 +178,12 @@ void ConCommand_differences(const CCommand& arg)
 	for (auto& map : R2::g_pCVar->DumpToMap())
 	{
 		ConVar* cvar = R2::g_pCVar->FindVar(map.second->m_pszName);
-
-		if(cvar->m_pszDefaultValue != cvar->GetString()){
-			PrintCommandHelpDialogue(map.second, map.second->m_pszName);
+		if(cvar){
+			if(cvar->m_pszDefaultValue != cvar->GetString()){
+				PrintCommandHelpDialogue(map.second, map.second->m_pszName);
+			}
+		} else{
+			return;
 		}
 	}
 }
