@@ -165,7 +165,12 @@ void ConCommand_list(const CCommand& arg)
 {
 	for (auto& map : R2::g_pCVar->DumpToMap())
 	{
-		PrintCommandHelpDialogue(map.second, map.second->m_pszName);
+		ConVar* cvar = R2::g_pCVar->FindVar(map.second->m_pszName);
+
+		if (cvar)
+			spdlog::info("\"{}\" - {}", cvar->GetBaseName(), cvar->GetHelpText());
+		else
+			spdlog::info("\"{}\" - {}", command->m_pszName, command->GetHelpText());
 	}
 }
 
