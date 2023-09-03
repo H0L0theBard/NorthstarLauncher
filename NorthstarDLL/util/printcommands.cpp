@@ -181,6 +181,8 @@ void ConCommand_differences(const CCommand& arg)
 		if(cvar){
 			if(cvar->m_pszDefaultValue != cvar->GetString()){
 				PrintCommandHelpDialogue(map.second, map.second->m_pszName);
+				spdlog::info("\"{}\" - {}", cvar->GetString(), cvar->m_pszDefaultValue);
+
 			}
 		} else{
 			return;
