@@ -160,6 +160,16 @@ void ConCommand_findflags(const CCommand& arg)
 	delete[] upperFlag;
 }
 
+
+void ConCommand_list(const CCommand& arg)
+{
+	// print cvars
+	for (auto& map : R2::g_pCVar->DumpToMap())
+	{
+		PrintCommandHelpDialogue(map.second, map.second->m_pszName);
+	}
+}
+
 void InitialiseCommandPrint()
 {
 	RegisterConCommand("find", ConCommand_find, "Find concommands with the specified string in their name/help text.", FCVAR_NONE);
@@ -170,4 +180,8 @@ void InitialiseCommandPrint()
 	ConCommand* helpCommand = R2::g_pCVar->FindCommand("help");
 	helpCommand->m_nFlags = FCVAR_NONE;
 	helpCommand->m_pCommandCallback = ConCommand_help;
+
+	ConCommand* listCommand = R2::g_pCVar->FindCommand("convar_list");
+	helpCommand->m_nFlags = FCVAR_NONE;
+	mapsCommand->m_pCommandCallback = ConCommand_list;
 }
