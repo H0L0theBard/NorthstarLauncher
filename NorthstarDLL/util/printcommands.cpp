@@ -175,7 +175,7 @@ void ConCommand_differences(const CCommand& arg)
 	// print cvars
 	for (auto& map : R2::g_pCVar->DumpToMap())
 	{
-		if(map.second->pszDefaultValue != map.second.GetString()){
+		if(map.second->m_pszDefaultValue != map.second.GetString()){
 			PrintCommandHelpDialogue(map.second, map.second->m_pszName);
 		}
 	}
