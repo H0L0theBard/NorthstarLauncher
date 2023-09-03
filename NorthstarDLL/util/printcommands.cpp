@@ -163,7 +163,6 @@ void ConCommand_findflags(const CCommand& arg)
 
 void ConCommand_list(const CCommand& arg)
 {
-	// print cvars
 	for (auto& map : R2::g_pCVar->DumpToMap())
 	{
 		PrintCommandHelpDialogue(map.second, map.second->m_pszName);
@@ -172,10 +171,11 @@ void ConCommand_list(const CCommand& arg)
 
 void ConCommand_differences(const CCommand& arg)
 {
-	// print cvars
 	for (auto& map : R2::g_pCVar->DumpToMap())
 	{
-		if(map.second->m_pszDefaultValue != map.second.GetString()){
+		ConVar* cvar = R2::g_pCVar->FindVar(map.second->m_pszName);
+
+		if(cvar->m_pszDefaultValue != cvar->GetString()){
 			PrintCommandHelpDialogue(map.second, map.second->m_pszName);
 		}
 	}
