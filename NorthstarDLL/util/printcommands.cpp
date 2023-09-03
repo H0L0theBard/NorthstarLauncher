@@ -182,6 +182,6 @@ void InitialiseCommandPrint()
 	helpCommand->m_pCommandCallback = ConCommand_help;
 
 	ConCommand* listCommand = R2::g_pCVar->FindCommand("convar_list");
-	helpCommand->m_nFlags = FCVAR_NONE;
-	mapsCommand->m_pCommandCallback = ConCommand_list;
+	listCommand->m_nFlags = FCVAR_NONE;
+	listCommand->m_pCommandCallback = ConCommand_list;
 }
