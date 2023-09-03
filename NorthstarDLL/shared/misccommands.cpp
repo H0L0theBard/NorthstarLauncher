@@ -224,6 +224,8 @@ void FixupCvarFlags()
 
 	// array of cvars and the flags we want to remove from them
 	const std::vector<std::tuple<const char*, uint32_t>> CVAR_FIXUP_REMOVE_FLAGS = {
+		{"convar_list", FCVAR_DEVELOPMENTONLY},
+
 		// unsure how this command works, not even sure it's used on retail servers, deffo shouldn't be used on northstar
 		{"migrateme", FCVAR_SERVER_CAN_EXECUTE | FCVAR_GAMEDLL_FOR_REMOTE_CLIENTS},
 		{"recheck", FCVAR_GAMEDLL_FOR_REMOTE_CLIENTS}, // we don't need this on northstar servers, it's for communities
