@@ -160,7 +160,6 @@ void ConCommand_findflags(const CCommand& arg)
 	delete[] upperFlag;
 }
 
-
 void ConCommand_list(const CCommand& arg)
 {
 	for (auto& map : R2::g_pCVar->DumpToMap())
@@ -170,7 +169,7 @@ void ConCommand_list(const CCommand& arg)
 		if (cvar)
 			spdlog::info("\"{}\" - {}", cvar->GetBaseName(), cvar->GetHelpText());
 		else
-			spdlog::info("\"{}\" - {}", command->m_pszName, command->GetHelpText());
+			spdlog::info("\"{}\" - {}", map.second->m_pszName, map.second->GetHelpText());
 	}
 }
 
