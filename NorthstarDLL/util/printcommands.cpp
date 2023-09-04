@@ -218,7 +218,6 @@ void InitialiseCommandPrint()
 	helpCommand->m_pCommandCallback = ConCommand_help;
 
 	ConCommand* findCommand = R2::g_pCVar->FindCommand("convar_findByFlags");
-	findCommand->pszHelpString = "Find convars/concommands by flags.";
 	findCommand->m_nFlags = FCVAR_NONE;
 	findCommand->m_pCommandCallback = ConCommand_findflags;
 
