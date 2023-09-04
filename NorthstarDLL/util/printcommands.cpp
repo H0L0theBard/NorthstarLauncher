@@ -195,7 +195,7 @@ void ConCommand_differences(const CCommand& arg)
 				if(cvar->m_bHasMin){
 					formatted.append(" min. " + std::string(cvar->m_fMinVal))
 				}
-				if(cvar->m_bHasMin){
+				if(cvar->m_bHasMax){
 					formatted.append(" max. " + std::string(cvar->m_fMaxVal))
 				}
 				spdlog::info(formatted);
