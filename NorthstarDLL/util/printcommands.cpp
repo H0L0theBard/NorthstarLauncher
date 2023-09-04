@@ -2,7 +2,11 @@
 #include "core/convar/convar.h"
 #include "core/convar/concommand.h"
 #include <string.h>
-bool ConvarCompare (std::pair<std::string, ConCommandBase*> a, std::pair<std::string, ConCommandBase*> b) {return a.first < b.first;}
+std::vector<std::pair<std::string, ConCommandBase*>> ConvarSort (std::unordered_map map) {
+	std::vector<std::pair<std::string, ConCommandBase*>> sorted(map.begin(), map.end());
+	std::sort(sorted.begin(),sorted.end(),[](std::pair<std::string, ConCommandBase*>& a, std::pair<std::string, ConCommandBase*>& b){return a.first < b.first;});
+	return sorted;
+}
 void PrintCommandHelpDialogue(const ConCommandBase* command, const char* name)
 {
 	if (!command)
@@ -95,9 +99,7 @@ void ConCommand_find(const CCommand& arg)
 	char pTempName[256];
 	char pTempSearchTerm[256];
 
-	std::unordered_map map = R2::g_pCVar->DumpToMap();
-	std::vector<std::pair<std::string, ConCommandBase*>> sorted(map.begin(), map.end());
-	std::sort(sorted.begin(),sorted.end(),ConvarCompare);
+	std::vector<std::pair<std::string, ConCommandBase*>> sorted = ConvarSort(R2::g_pCVar->DumpToMap());
 
 	for (auto& map : sorted)
 	{
@@ -155,10 +157,8 @@ void ConCommand_findflags(const CCommand& arg)
 		}
 	}
 
-	std::unordered_map map = R2::g_pCVar->DumpToMap();
-	std::vector<std::pair<std::string, ConCommandBase*>> sorted(map.begin(), map.end());
-	std::sort(sorted.begin(),sorted.end(),ConvarCompare);
 
+	std::vector<std::pair<std::string, ConCommandBase*>> sorted = ConvarSort(R2::g_pCVar->DumpToMap());
 	// print cvars
 	for (auto& map : sorted)
 	{
@@ -171,9 +171,7 @@ void ConCommand_findflags(const CCommand& arg)
 
 void ConCommand_list(const CCommand& arg)
 {	
-	std::unordered_map map = R2::g_pCVar->DumpToMap();
-	std::vector<std::pair<std::string, ConCommandBase*>> sorted(map.begin(), map.end());
-	std::sort(sorted.begin(),sorted.end(),ConvarCompare);
+	std::vector<std::pair<std::string, ConCommandBase*>> sorted = ConvarSort(R2::g_pCVar->DumpToMap());
 	for (auto& map : sorted)
 	{
 		PrintCommandHelpDialogue(map.second, map.second->m_pszName);
@@ -182,9 +180,7 @@ void ConCommand_list(const CCommand& arg)
 
 void ConCommand_differences(const CCommand& arg)
 {
-	std::unordered_map map = R2::g_pCVar->DumpToMap();
-	std::vector<std::pair<std::string, ConCommandBase*>> sorted(map.begin(), map.end());
-	std::sort(sorted.begin(),sorted.end(),ConvarCompare);
+	std::vector<std::pair<std::string, ConCommandBase*>> sorted = ConvarSort(R2::g_pCVar->DumpToMap());
 	for (auto& map : sorted)
 	{
 		ConVar* cvar = R2::g_pCVar->FindVar(map.second->m_pszName);
