@@ -178,9 +178,9 @@ void ConCommand_differences(const CCommand& arg)
 			PrintCommandHelpDialogue(map.second, map.second->m_pszName);
 			spdlog::info("Value: {}", cvar->m_Value.m_pszString);
 			spdlog::info("Default: {}", cvar->m_pszDefaultValue);
-		}
 	}
 }
+
 
 void InitialiseCommandPrint()
 {
