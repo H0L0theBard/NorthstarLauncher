@@ -2,7 +2,7 @@
 #include "core/convar/convar.h"
 #include "core/convar/concommand.h"
 #include <string.h>
-
+bool ConvarCompare (std::pair<std::string, ConCommandBase*> a, std::pair<std::string, ConCommandBase*> b) {return a.first < b.first;}
 void PrintCommandHelpDialogue(const ConCommandBase* command, const char* name)
 {
 	if (!command)
@@ -162,9 +162,10 @@ void ConCommand_findflags(const CCommand& arg)
 }
 
 void ConCommand_list(const CCommand& arg)
-{	std::unordered_map map = R2::g_pCVar->DumpToMap();
-	std::vector<std::pair<std::string, ConCommandBase*> > sorted(map.begin(), map.end());
-	std::sort(sorted.begin(),sorted.end(),[](std::pair<std::string, ConCommandBase*>& a, std::pair<std::string, ConCommandBase*>& b) { return a.first < b.first; });
+{	
+	std::unordered_map map = R2::g_pCVar->DumpToMap();
+	std::vector<std::pair<std::string, ConCommandBase*>> sorted(map.begin(), map.end());
+	std::sort(sorted.begin(),sorted.end(),ConvarCompare);
 	for (auto& ConCommand : sorted)
 	{
 		PrintCommandHelpDialogue(ConCommand.second, ConCommand.second->m_pszName);
@@ -173,14 +174,17 @@ void ConCommand_list(const CCommand& arg)
 
 void ConCommand_differences(const CCommand& arg)
 {
-	for (auto& map : R2::g_pCVar->DumpToMap())
+	std::unordered_map map = R2::g_pCVar->DumpToMap();
+	std::vector<std::pair<std::string, ConCommandBase*>> sorted(map.begin(), map.end());
+	std::sort(sorted.begin(),sorted.end(),ConvarCompare);
+	for (auto& ConCommand : sorted)
 	{
-		ConVar* cvar = R2::g_pCVar->FindVar(map.second->m_pszName);
+		ConVar* cvar = R2::g_pCVar->FindVar(ConCommand.second->m_pszName);
 		if (cvar && strcmp(cvar->GetString(), "FCVAR_NEVER_AS_STRING") != NULL)
 		{
 			if (strcmp(cvar->GetString(), cvar->m_pszDefaultValue) != NULL)
 			{
-				PrintCommandHelpDialogue(map.second, map.second->m_pszName);
+				PrintCommandHelpDialogue(ConCommand.second, ConCommand.second->m_pszName);
 				spdlog::info("Current Value: {}", cvar->m_Value.m_pszString);
 				spdlog::info("Default Value: {}", cvar->m_pszDefaultValue);
 			}
