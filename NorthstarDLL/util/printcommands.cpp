@@ -2,9 +2,14 @@
 #include "core/convar/convar.h"
 #include "core/convar/concommand.h"
 #include <string.h>
-std::vector<std::pair<std::string, ConCommandBase*>> ConvarSort (std::unordered_map<std::string, ConCommandBase*> map) {
+
+std::vector<std::pair<std::string, ConCommandBase*>> ConvarSort(std::unordered_map<std::string, ConCommandBase*> map)
+{
 	std::vector<std::pair<std::string, ConCommandBase*>> sorted(map.begin(), map.end());
-	std::sort(sorted.begin(),sorted.end(),[](std::pair<std::string, ConCommandBase*>& a, std::pair<std::string, ConCommandBase*>& b){return a.first < b.first;});
+	std::sort(
+		sorted.begin(),
+		sorted.end(),
+		[](std::pair<std::string, ConCommandBase*>& a, std::pair<std::string, ConCommandBase*>& b) { return a.first < b.first; });
 	return sorted;
 }
 void PrintCommandHelpDialogue(const ConCommandBase* command, const char* name)
@@ -157,7 +162,6 @@ void ConCommand_findflags(const CCommand& arg)
 		}
 	}
 
-
 	std::vector<std::pair<std::string, ConCommandBase*>> sorted = ConvarSort(R2::g_pCVar->DumpToMap());
 	// print cvars
 	for (auto& map : sorted)
@@ -170,7 +174,7 @@ void ConCommand_findflags(const CCommand& arg)
 }
 
 void ConCommand_list(const CCommand& arg)
-{	
+{
 	std::vector<std::pair<std::string, ConCommandBase*>> sorted = ConvarSort(R2::g_pCVar->DumpToMap());
 	for (auto& map : sorted)
 	{
