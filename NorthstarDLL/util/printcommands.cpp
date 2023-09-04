@@ -162,7 +162,6 @@ void ConCommand_findflags(const CCommand& arg)
 	}
 
 	std::vector<std::pair<std::string, ConCommandBase*>> sorted = ConvarSort(R2::g_pCVar->DumpToMap());
-	// print cvars
 	for (auto& map : sorted)
 	{
 		if (map.second->m_nFlags & resolvedFlag)
@@ -191,14 +190,17 @@ void ConCommand_differences(const CCommand& arg)
 		{
 			if (strcmp(cvar->GetString(), cvar->m_pszDefaultValue) != NULL)
 			{
-				std::string formatted = fmt::format("\"{}\" = \"{}\" ( def. \"{}\" )",cvar->GetBaseName(), cvar->GetString(), cvar->m_pszDefaultValue);
-				if(cvar->m_bHasMin){
-					formatted.append(fmt::format(" min. {}",cvar->m_fMinVal));
+				std::string formatted =
+					fmt::format("\"{}\" = \"{}\" ( def. \"{}\" )", cvar->GetBaseName(), cvar->GetString(), cvar->m_pszDefaultValue);
+				if (cvar->m_bHasMin)
+				{
+					formatted.append(fmt::format(" min. {}", cvar->m_fMinVal));
 				}
-				if(cvar->m_bHasMax){
-					formatted.append(fmt::format(" max. {}",cvar->m_fMaxVal));
+				if (cvar->m_bHasMax)
+				{
+					formatted.append(fmt::format(" max. {}", cvar->m_fMaxVal));
 				}
-				spdlog::info(formatted);
+				formatted.append(fmt::format(" {}", cvar->GetHelpText())) spdlog::info(formatted);
 			}
 		}
 	}
