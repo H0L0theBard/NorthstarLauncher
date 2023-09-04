@@ -200,7 +200,8 @@ void ConCommand_differences(const CCommand& arg)
 				{
 					formatted.append(fmt::format(" max. {}", cvar->m_fMaxVal));
 				}
-				formatted.append(fmt::format(" {}", cvar->GetHelpText())) spdlog::info(formatted);
+				formatted.append(fmt::format(" {}", cvar->GetHelpText()));
+				spdlog::info(formatted);
 			}
 		}
 	}
