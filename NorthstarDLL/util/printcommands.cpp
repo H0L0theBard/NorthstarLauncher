@@ -193,13 +193,16 @@ void ConCommand_differences(const CCommand& arg)
 void InitialiseCommandPrint()
 {
 	RegisterConCommand("find", ConCommand_find, "Find concommands with the specified string in their name/help text.", FCVAR_NONE);
-	RegisterConCommand("findflags", ConCommand_findflags, "Find concommands by flags.", FCVAR_NONE);
 
 	// help is already a command, so we need to modify the preexisting command to use our func instead
 	// and clear the flags also
 	ConCommand* helpCommand = R2::g_pCVar->FindCommand("help");
 	helpCommand->m_nFlags = FCVAR_NONE;
 	helpCommand->m_pCommandCallback = ConCommand_help;
+
+	ConCommand* findCommand = R2::g_pCVar->FindCommand("convar_findByFlags");
+	findCommand->m_nFlags = FCVAR_NONE;
+	findCommand->m_pCommandCallback = ConCommand_findflags;
 
 	ConCommand* listCommand = R2::g_pCVar->FindCommand("convar_list");
 	listCommand->m_nFlags = FCVAR_NONE;
