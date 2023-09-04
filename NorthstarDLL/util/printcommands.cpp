@@ -1,7 +1,6 @@
 #include "printcommands.h"
 #include "core/convar/convar.h"
 #include "core/convar/concommand.h"
-#include <string.h>
 
 std::vector<std::pair<std::string, ConCommandBase*>> ConvarSort(std::unordered_map<std::string, ConCommandBase*> map)
 {
