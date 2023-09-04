@@ -193,10 +193,10 @@ void ConCommand_differences(const CCommand& arg)
 			{
 				std::string formatted = fmt::format("\"{}\" = \"{}\" ( def. \"{}\" )",cvar->GetBaseName(), cvar->GetString(), cvar->m_pszDefaultValue);
 				if(cvar->m_bHasMin){
-					formatted.append(" min. " + std::string(cvar->m_fMinVal));
+					formatted.append(fmt::format(" min. {}",cvar->m_fMinVal));
 				}
 				if(cvar->m_bHasMax){
-					formatted.append(" max. " + std::string(cvar->m_fMaxVal));
+					formatted.append(fmt::format(" max. {}",cvar->m_fMaxVal));
 				}
 				spdlog::info(formatted);
 			}
