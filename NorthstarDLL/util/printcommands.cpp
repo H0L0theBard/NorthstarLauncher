@@ -191,7 +191,7 @@ void ConCommand_differences(const CCommand& arg)
 		{
 			if (strcmp(cvar->GetString(), cvar->m_pszDefaultValue) != NULL)
 			{
-				std::string formatted = std::format("\"{}\" = \"{}\" ( def. \"{}\" )",cvar->GetBaseName(), cvar->GetString(), cvar->m_pszDefaultValue)
+				std::string formatted = fmt::format("\"{}\" = \"{}\" ( def. \"{}\" )",cvar->GetBaseName(), cvar->GetString(), cvar->m_pszDefaultValue)
 				if(cvar->m_bHasMin){
 					formatted.append(" min. " + std::string(cvar->m_fMinVal))
 				}
