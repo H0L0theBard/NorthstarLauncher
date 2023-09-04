@@ -164,7 +164,7 @@ void ConCommand_findflags(const CCommand& arg)
 void ConCommand_list(const CCommand& arg)
 {	std::unordered_map map = R2::g_pCVar->DumpToMap();
 	std::vector<std::pair<std::string, ConCommandBase*> > sorted(map.begin(), map.end());
-	std::sort(sorted.begin(),sorted.end(),[](std::pair<std::string, ConCommandBase*>& a, std::pair<std::string, ConCommandBase*>& b) { return a.first > b.first; });
+	std::sort(sorted.begin(),sorted.end(),[](std::pair<std::string, ConCommandBase*>& a, std::pair<std::string, ConCommandBase*>& b) { return a.first < b.first; });
 	for (auto& ConCommand : sorted)
 	{
 		PrintCommandHelpDialogue(ConCommand.second, ConCommand.second->m_pszName);
