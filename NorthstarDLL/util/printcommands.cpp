@@ -2,7 +2,7 @@
 #include "core/convar/convar.h"
 #include "core/convar/concommand.h"
 #include <string.h>
-std::vector<std::pair<std::string, ConCommandBase*>> ConvarSort (std::unordered_map map) {
+std::vector<std::pair<std::string, ConCommandBase*>> ConvarSort (std::unordered_map<std::string, ConCommandBase*> map) {
 	std::vector<std::pair<std::string, ConCommandBase*>> sorted(map.begin(), map.end());
 	std::sort(sorted.begin(),sorted.end(),[](std::pair<std::string, ConCommandBase*>& a, std::pair<std::string, ConCommandBase*>& b){return a.first < b.first;});
 	return sorted;
