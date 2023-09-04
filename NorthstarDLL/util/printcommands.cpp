@@ -174,11 +174,13 @@ void ConCommand_differences(const CCommand& arg)
 	for (auto& map : R2::g_pCVar->DumpToMap())
 	{
 		ConVar* cvar = R2::g_pCVar->FindVar(map.second->m_pszName);
-		if(cvar && strcmp(cvar->GetString(), "FCVAR_NEVER_AS_STRING") != NULL){
-			if(strcmp(cvar->GetString(), cvar->m_pszDefaultValue) != NULL){
+		if (cvar && strcmp(cvar->GetString(), "FCVAR_NEVER_AS_STRING") != NULL)
+		{
+			if (strcmp(cvar->GetString(), cvar->m_pszDefaultValue) != NULL)
+			{
 				PrintCommandHelpDialogue(map.second, map.second->m_pszName);
-				spdlog::info("Value: {}", cvar->m_Value.m_pszString);
-				spdlog::info("Default: {}", cvar->m_pszDefaultValue);
+				spdlog::info("Current Value: {}", cvar->m_Value.m_pszString);
+				spdlog::info("Default Value: {}", cvar->m_pszDefaultValue);
 			}
 		}
 	}
