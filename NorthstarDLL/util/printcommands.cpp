@@ -1,6 +1,7 @@
 #include "printcommands.h"
 #include "core/convar/convar.h"
 #include "core/convar/concommand.h"
+#include <string.h>
 
 void PrintCommandHelpDialogue(const ConCommandBase* command, const char* name)
 {
@@ -174,7 +175,7 @@ void ConCommand_differences(const CCommand& arg)
 	{
 		ConVar* cvar = R2::g_pCVar->FindVar(map.second->m_pszName);
 		if(cvar){
-			if(cvar->m_Value.m_pszString != cvar->m_pszDefaultValue){
+			if(!strcmp(cvar->m_Value.m_pszString, cvar->m_pszDefaultValue)){
 				PrintCommandHelpDialogue(map.second, map.second->m_pszName);
 				spdlog::info("\"{}\" - {}", cvar->GetString(), cvar->m_pszDefaultValue);
 			} else{
