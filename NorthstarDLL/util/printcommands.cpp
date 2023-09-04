@@ -95,7 +95,11 @@ void ConCommand_find(const CCommand& arg)
 	char pTempName[256];
 	char pTempSearchTerm[256];
 
-	for (auto& map : R2::g_pCVar->DumpToMap())
+	std::unordered_map map = R2::g_pCVar->DumpToMap();
+	std::vector<std::pair<std::string, ConCommandBase*>> sorted(map.begin(), map.end());
+	std::sort(sorted.begin(),sorted.end(),ConvarCompare);
+
+	for (auto& map : sorted)
 	{
 		bool bPrintCommand = true;
 		for (int i = 0; i < arg.ArgC() - 1; i++)
@@ -151,8 +155,12 @@ void ConCommand_findflags(const CCommand& arg)
 		}
 	}
 
+	std::unordered_map map = R2::g_pCVar->DumpToMap();
+	std::vector<std::pair<std::string, ConCommandBase*>> sorted(map.begin(), map.end());
+	std::sort(sorted.begin(),sorted.end(),ConvarCompare);
+
 	// print cvars
-	for (auto& map : R2::g_pCVar->DumpToMap())
+	for (auto& map : sorted)
 	{
 		if (map.second->m_nFlags & resolvedFlag)
 			PrintCommandHelpDialogue(map.second, map.second->m_pszName);
@@ -166,9 +174,9 @@ void ConCommand_list(const CCommand& arg)
 	std::unordered_map map = R2::g_pCVar->DumpToMap();
 	std::vector<std::pair<std::string, ConCommandBase*>> sorted(map.begin(), map.end());
 	std::sort(sorted.begin(),sorted.end(),ConvarCompare);
-	for (auto& ConCommand : sorted)
+	for (auto& map : sorted)
 	{
-		PrintCommandHelpDialogue(ConCommand.second, ConCommand.second->m_pszName);
+		PrintCommandHelpDialogue(map.second, map.second->m_pszName);
 	}
 }
 
@@ -177,14 +185,14 @@ void ConCommand_differences(const CCommand& arg)
 	std::unordered_map map = R2::g_pCVar->DumpToMap();
 	std::vector<std::pair<std::string, ConCommandBase*>> sorted(map.begin(), map.end());
 	std::sort(sorted.begin(),sorted.end(),ConvarCompare);
-	for (auto& ConCommand : sorted)
+	for (auto& map : sorted)
 	{
-		ConVar* cvar = R2::g_pCVar->FindVar(ConCommand.second->m_pszName);
+		ConVar* cvar = R2::g_pCVar->FindVar(map.second->m_pszName);
 		if (cvar && strcmp(cvar->GetString(), "FCVAR_NEVER_AS_STRING") != NULL)
 		{
 			if (strcmp(cvar->GetString(), cvar->m_pszDefaultValue) != NULL)
 			{
-				PrintCommandHelpDialogue(ConCommand.second, ConCommand.second->m_pszName);
+				PrintCommandHelpDialogue(map.second, map.second->m_pszName);
 				spdlog::info("Current Value: {}", cvar->m_Value.m_pszString);
 				spdlog::info("Default Value: {}", cvar->m_pszDefaultValue);
 			}
