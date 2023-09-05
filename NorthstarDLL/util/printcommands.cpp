@@ -1,5 +1,4 @@
 #include "printcommands.h"
-#include "core/convar/cvar.h"
 #include "core/convar/convar.h"
 #include "core/convar/concommand.h"
 
@@ -176,7 +175,7 @@ void ConCommand_findflags(const CCommand& arg)
 void ConCommand_list(const CCommand& arg)
 {
 	ConCommandBase* var;
-	CCVarIteratorInternal* itint = CCVar::FactoryInternalIterator();
+	CCVarIteratorInternal* itint = g_pCVar->FactoryInternalIterator();
 	for (itint->SetFirst(); itint->IsValid(); itint->Next())
 	{
 		var = itint->Get();
