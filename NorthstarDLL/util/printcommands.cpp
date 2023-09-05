@@ -1,10 +1,11 @@
 #include "printcommands.h"
 #include "core/convar/convar.h"
 #include "core/convar/concommand.h"
+typedef std::vector<std::pair<std::string, ConCommandBase*>> ConCommandBases;
 
-std::vector<std::pair<std::string, ConCommandBase*>> ConvarSort(std::unordered_map<std::string, ConCommandBase*> map)
+ConCommandBases ConvarSort(std::unordered_map<std::string, ConCommandBase*> map)
 {
-	std::vector<std::pair<std::string, ConCommandBase*>> sorted(map.begin(), map.end());
+	ConCommandBases sorted(map.begin(), map.end());
 	std::sort(
 		sorted.begin(),
 		sorted.end(),
@@ -103,7 +104,7 @@ void ConCommand_find(const CCommand& arg)
 	char pTempName[256];
 	char pTempSearchTerm[256];
 
-	std::vector<std::pair<std::string, ConCommandBase*>> sorted = ConvarSort(R2::g_pCVar->DumpToMap());
+	ConCommandBases sorted = ConvarSort(R2::g_pCVar->DumpToMap());
 
 	for (auto& map : sorted)
 	{
@@ -161,7 +162,7 @@ void ConCommand_findflags(const CCommand& arg)
 		}
 	}
 
-	std::vector<std::pair<std::string, ConCommandBase*>> sorted = ConvarSort(R2::g_pCVar->DumpToMap());
+	ConCommandBases sorted = ConvarSort(R2::g_pCVar->DumpToMap());
 	for (auto& map : sorted)
 	{
 		if (map.second->m_nFlags & resolvedFlag)
@@ -173,7 +174,7 @@ void ConCommand_findflags(const CCommand& arg)
 
 void ConCommand_list(const CCommand& arg)
 {
-	std::vector<std::pair<std::string, ConCommandBase*>> sorted = ConvarSort(R2::g_pCVar->DumpToMap());
+	ConCommandBases sorted = ConvarSort(R2::g_pCVar->DumpToMap());
 	for (auto& map : sorted)
 	{
 		PrintCommandHelpDialogue(map.second, map.second->m_pszName);
@@ -182,7 +183,7 @@ void ConCommand_list(const CCommand& arg)
 
 void ConCommand_differences(const CCommand& arg)
 {
-	std::vector<std::pair<std::string, ConCommandBase*>> sorted = ConvarSort(R2::g_pCVar->DumpToMap());
+	ConCommandBases sorted = ConvarSort(R2::g_pCVar->DumpToMap());
 	for (auto& map : sorted)
 	{
 		ConVar* cvar = R2::g_pCVar->FindVar(map.second->m_pszName);
