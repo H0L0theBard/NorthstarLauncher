@@ -1,4 +1,5 @@
 #include "printcommands.h"
+#include "core/convar/cvar.h"
 #include "core/convar/convar.h"
 #include "core/convar/concommand.h"
 
