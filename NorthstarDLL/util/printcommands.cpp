@@ -176,7 +176,7 @@ void ConCommand_findflags(const CCommand& arg)
 void ConCommand_list(const CCommand& arg)
 {
 	ConCommandBase* var;
-	CCVarIteratorInternal* itint = g_pCVar->FactoryInternalIterator();
+	CCVarIteratorInternal* itint = R2::g_pCVar->FactoryInternalIterator();
 	for (itint->SetFirst(); itint->IsValid(); itint->Next())
 	{
 		var = itint->Get();
