@@ -105,8 +105,19 @@ void ConCommand_find(const CCommand& arg)
 	char pTempName[256];
 	char pTempSearchTerm[256];
 
-	std::vector<std::pair<std::string, ConCommandBase*>> sorted = ConvarSort(R2::g_pCVar->DumpToMap());
+	ConCommandBase* var;
+	CCVarIteratorInternal* itint = R2::g_pCVar->FactoryInternalIterator();
+	std::vector<std::pair<std::string, ConCommandBase*>> sorted;
+	for (itint->SetFirst(); itint->IsValid(); itint->Next())
+	{
+		var = itint->Get();
+		if(!cvar->IsFlagSet(FCVAR_DEVELOPMENTONLY) || !cvar->IsFlagSet(FCVAR_HIDDEN)){
+			sorted.append(var->m_pszName,var);
+		}
+	}
 
+	sorted = ConvarSort(sorted);
+	
 	for (auto& map : sorted)
 	{
 		bool bPrintCommand = true;
@@ -163,7 +174,19 @@ void ConCommand_findflags(const CCommand& arg)
 		}
 	}
 
-	std::vector<std::pair<std::string, ConCommandBase*>> sorted = ConvarSort(R2::g_pCVar->DumpToMap());
+	ConCommandBase* var;
+	CCVarIteratorInternal* itint = R2::g_pCVar->FactoryInternalIterator();
+	std::vector<std::pair<std::string, ConCommandBase*>> sorted;
+	for (itint->SetFirst(); itint->IsValid(); itint->Next())
+	{
+		var = itint->Get();
+		if(!cvar->IsFlagSet(FCVAR_DEVELOPMENTONLY) || !cvar->IsFlagSet(FCVAR_HIDDEN)){
+			sorted.append(var->m_pszName,var);
+		}
+	}
+
+	sorted = ConvarSort(sorted);
+	
 	for (auto& map : sorted)
 	{
 		if (map.second->m_nFlags & resolvedFlag)
@@ -177,35 +200,60 @@ void ConCommand_list(const CCommand& arg)
 {
 	ConCommandBase* var;
 	CCVarIteratorInternal* itint = R2::g_pCVar->FactoryInternalIterator();
+	std::vector<std::pair<std::string, ConCommandBase*>> sorted;
 	for (itint->SetFirst(); itint->IsValid(); itint->Next())
 	{
 		var = itint->Get();
+		if(!cvar->IsFlagSet(FCVAR_DEVELOPMENTONLY) || !cvar->IsFlagSet(FCVAR_HIDDEN)){
+			sorted.append(var->m_pszName,var);
+		}
+	}
+
+	sorted = ConvarSort(sorted);
+	
+	for(auto& map : sorted)
+	{
 		PrintCommandHelpDialogue(var, var->m_pszName);
 	}
 }
 
 void ConCommand_differences(const CCommand& arg)
 {
-	std::vector<std::pair<std::string, ConCommandBase*>> sorted = ConvarSort(R2::g_pCVar->DumpToMap());
+	ConCommandBase* var;
+	CCVarIteratorInternal* itint = R2::g_pCVar->FactoryInternalIterator();
+	std::vector<std::pair<std::string, ConCommandBase*>> sorted;
+	for (itint->SetFirst(); itint->IsValid(); itint->Next())
+	{
+		var = itint->Get();
+		if(!cvar->IsFlagSet(FCVAR_DEVELOPMENTONLY) || !cvar->IsFlagSet(FCVAR_HIDDEN)){
+			sorted.append(var->m_pszName,var);
+		}
+	}
+
+	sorted = ConvarSort(sorted);
+
 	for (auto& map : sorted)
 	{
 		ConVar* cvar = R2::g_pCVar->FindVar(map.second->m_pszName);
-		if (cvar && strcmp(cvar->GetString(), "FCVAR_NEVER_AS_STRING") != NULL)
+		if (cvar && !cvar->IsFlagSet(FCVAR_DEVELOPMENTONLY) || !cvar->IsFlagSet(FCVAR_HIDDEN))
 		{
-			if (strcmp(cvar->GetString(), cvar->m_pszDefaultValue) != NULL)
+			if (strcmp(cvar->GetString(), "FCVAR_NEVER_AS_STRING") != NULL)
 			{
-				std::string formatted =
-					fmt::format("\"{}\" = \"{}\" ( def. \"{}\" )", cvar->GetBaseName(), cvar->GetString(), cvar->m_pszDefaultValue);
-				if (cvar->m_bHasMin)
+				if (strcmp(cvar->GetString(), cvar->m_pszDefaultValue) != NULL)
 				{
-					formatted.append(fmt::format(" min. {}", cvar->m_fMinVal));
+					std::string formatted =
+						fmt::format("\"{}\" = \"{}\" ( def. \"{}\" )", cvar->GetBaseName(), cvar->GetString(), cvar->m_pszDefaultValue);
+					if (cvar->m_bHasMin)
+					{
+						formatted.append(fmt::format(" min. {}", cvar->m_fMinVal));
+					}
+					if (cvar->m_bHasMax)
+					{
+						formatted.append(fmt::format(" max. {}", cvar->m_fMaxVal));
+					}
+					formatted.append(fmt::format(" - {}", cvar->GetHelpText()));
+					spdlog::info(formatted);
 				}
-				if (cvar->m_bHasMax)
-				{
-					formatted.append(fmt::format(" max. {}", cvar->m_fMaxVal));
-				}
-				formatted.append(fmt::format(" - {}", cvar->GetHelpText()));
-				spdlog::info(formatted);
 			}
 		}
 	}
