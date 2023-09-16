@@ -107,7 +107,7 @@ void ConCommand_find(const CCommand& arg)
 
 	ConCommandBase* var;
 	CCVarIteratorInternal* itint = R2::g_pCVar->FactoryInternalIterator();
-	std::vector<std::pair<std::string, ConCommandBase*>> sorted;
+	std::unordered_map<std::string, ConCommandBase*> unsortedConvars;
 	for (itint->SetFirst(); itint->IsValid(); itint->Next())
 	{
 		var = itint->Get();
@@ -116,7 +116,7 @@ void ConCommand_find(const CCommand& arg)
 		}
 	}
 
-	sorted = ConvarSort(sorted);
+	std::vector<std::pair<std::string, ConCommandBase*>> sorted = ConvarSort(unsortedConvars);
 
 	for (auto& map : sorted)
 	{
@@ -176,7 +176,7 @@ void ConCommand_findflags(const CCommand& arg)
 
 	ConCommandBase* var;
 	CCVarIteratorInternal* itint = R2::g_pCVar->FactoryInternalIterator();
-	std::vector<std::pair<std::string, ConCommandBase*>> sorted;
+	std::unordered_map<std::string, ConCommandBase*> unsortedConvars;
 	for (itint->SetFirst(); itint->IsValid(); itint->Next())
 	{
 		var = itint->Get();
@@ -185,7 +185,7 @@ void ConCommand_findflags(const CCommand& arg)
 		}
 	}
 
-	sorted = ConvarSort(sorted);
+	std::vector<std::pair<std::string, ConCommandBase*>> sorted = ConvarSort(unsortedConvars);
 	
 	for (auto& map : sorted)
 	{
@@ -200,7 +200,7 @@ void ConCommand_list(const CCommand& arg)
 {
 	ConCommandBase* var;
 	CCVarIteratorInternal* itint = R2::g_pCVar->FactoryInternalIterator();
-	std::vector<std::pair<std::string, ConCommandBase*>> sorted;
+	std::unordered_map<std::string, ConCommandBase*> unsortedConvars;
 	for (itint->SetFirst(); itint->IsValid(); itint->Next())
 	{
 		var = itint->Get();
@@ -209,7 +209,7 @@ void ConCommand_list(const CCommand& arg)
 		}
 	}
 
-	sorted = ConvarSort(sorted);
+	std::vector<std::pair<std::string, ConCommandBase*>> sorted = ConvarSort(unsortedConvars);
 	
 	for(auto& map : sorted)
 	{
@@ -221,7 +221,7 @@ void ConCommand_differences(const CCommand& arg)
 {
 	ConCommandBase* var;
 	CCVarIteratorInternal* itint = R2::g_pCVar->FactoryInternalIterator();
-	std::vector<std::pair<std::string, ConCommandBase*>> sorted;
+	std::unordered_map<std::string, ConCommandBase*> unsortedConvars;
 	for (itint->SetFirst(); itint->IsValid(); itint->Next())
 	{
 		var = itint->Get();
@@ -230,7 +230,7 @@ void ConCommand_differences(const CCommand& arg)
 		}
 	}
 
-	sorted = ConvarSort(sorted);
+	std::vector<std::pair<std::string, ConCommandBase*>> sorted = ConvarSort(unsortedConvars);
 
 	for (auto& map : sorted)
 	{
