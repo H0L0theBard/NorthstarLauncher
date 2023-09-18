@@ -111,12 +111,12 @@ void ConCommand_find(const CCommand& arg)
 	for (itint->SetFirst(); itint->IsValid(); itint->Next())
 	{
 		var = itint->Get();
-		if(!var->IsFlagSet(FCVAR_DEVELOPMENTONLY) && !var->IsFlagSet(FCVAR_HIDDEN))
+		if (!var->IsFlagSet(FCVAR_DEVELOPMENTONLY) && !var->IsFlagSet(FCVAR_HIDDEN))
 		{
-			unsortedConvars.insert({var->m_pszName,var});
+			unsortedConvars.insert({var->m_pszName, var});
 		}
 	}
-	delete itint; 
+	delete itint;
 
 	std::vector<std::pair<std::string, ConCommandBase*>> sorted = ConvarSort(unsortedConvars);
 
@@ -182,15 +182,15 @@ void ConCommand_findflags(const CCommand& arg)
 	for (itint->SetFirst(); itint->IsValid(); itint->Next())
 	{
 		var = itint->Get();
-		if(!var->IsFlagSet(FCVAR_DEVELOPMENTONLY) && !var->IsFlagSet(FCVAR_HIDDEN))
+		if (!var->IsFlagSet(FCVAR_DEVELOPMENTONLY) && !var->IsFlagSet(FCVAR_HIDDEN))
 		{
-			unsortedConvars.insert({var->m_pszName,var});
+			unsortedConvars.insert({var->m_pszName, var});
 		}
 	}
-	delete itint; 
+	delete itint;
 
 	std::vector<std::pair<std::string, ConCommandBase*>> sorted = ConvarSort(unsortedConvars);
-	
+
 	for (auto& map : sorted)
 	{
 		if (map.second->m_nFlags & resolvedFlag)
@@ -208,16 +208,16 @@ void ConCommand_list(const CCommand& arg)
 	for (itint->SetFirst(); itint->IsValid(); itint->Next())
 	{
 		var = itint->Get();
-		if(!var->IsFlagSet(FCVAR_DEVELOPMENTONLY) && !var->IsFlagSet(FCVAR_HIDDEN))
+		if (!var->IsFlagSet(FCVAR_DEVELOPMENTONLY) && !var->IsFlagSet(FCVAR_HIDDEN))
 		{
-			unsortedConvars.insert({var->m_pszName,var});
+			unsortedConvars.insert({var->m_pszName, var});
 		}
 	}
-	delete itint; 
+	delete itint;
 
 	std::vector<std::pair<std::string, ConCommandBase*>> sorted = ConvarSort(unsortedConvars);
-	
-	for(auto& map : sorted)
+
+	for (auto& map : sorted)
 	{
 		PrintCommandHelpDialogue(map.second, map.second->m_pszName);
 	}
@@ -231,12 +231,12 @@ void ConCommand_differences(const CCommand& arg)
 	for (itint->SetFirst(); itint->IsValid(); itint->Next())
 	{
 		var = itint->Get();
-		if(!var->IsFlagSet(FCVAR_DEVELOPMENTONLY) && !var->IsFlagSet(FCVAR_HIDDEN))
+		if (!var->IsFlagSet(FCVAR_DEVELOPMENTONLY) && !var->IsFlagSet(FCVAR_HIDDEN))
 		{
-			unsortedConvars.insert({var->m_pszName,var});
+			unsortedConvars.insert({var->m_pszName, var});
 		}
 	}
-	delete itint; 
+	delete itint;
 
 	std::vector<std::pair<std::string, ConCommandBase*>> sorted = ConvarSort(unsortedConvars);
 
