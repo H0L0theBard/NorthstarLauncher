@@ -111,7 +111,7 @@ void ConCommand_find(const CCommand& arg)
 	for (itint->SetFirst(); itint->IsValid(); itint->Next())
 	{
 		var = itint->Get();
-		if(!var->IsFlagSet(FCVAR_DEVELOPMENTONLY) || !var->IsFlagSet(FCVAR_HIDDEN))
+		if(!var->IsFlagSet(FCVAR_DEVELOPMENTONLY) && !var->IsFlagSet(FCVAR_HIDDEN))
 		{
 			unsortedConvars.insert({var->m_pszName,var});
 		}
@@ -181,7 +181,7 @@ void ConCommand_findflags(const CCommand& arg)
 	for (itint->SetFirst(); itint->IsValid(); itint->Next())
 	{
 		var = itint->Get();
-		if(!var->IsFlagSet(FCVAR_DEVELOPMENTONLY) || !var->IsFlagSet(FCVAR_HIDDEN))
+		if(!var->IsFlagSet(FCVAR_DEVELOPMENTONLY) && !var->IsFlagSet(FCVAR_HIDDEN))
 		{
 			unsortedConvars.insert({var->m_pszName,var});
 		}
@@ -206,7 +206,7 @@ void ConCommand_list(const CCommand& arg)
 	for (itint->SetFirst(); itint->IsValid(); itint->Next())
 	{
 		var = itint->Get();
-		if(!var->IsFlagSet(FCVAR_DEVELOPMENTONLY) || !var->IsFlagSet(FCVAR_HIDDEN))
+		if(!var->IsFlagSet(FCVAR_DEVELOPMENTONLY) && !var->IsFlagSet(FCVAR_HIDDEN))
 		{
 			unsortedConvars.insert({var->m_pszName,var});
 		}
@@ -228,7 +228,7 @@ void ConCommand_differences(const CCommand& arg)
 	for (itint->SetFirst(); itint->IsValid(); itint->Next())
 	{
 		var = itint->Get();
-		if(!var->IsFlagSet(FCVAR_DEVELOPMENTONLY) || !var->IsFlagSet(FCVAR_HIDDEN))
+		if(!var->IsFlagSet(FCVAR_DEVELOPMENTONLY) && !var->IsFlagSet(FCVAR_HIDDEN))
 		{
 			unsortedConvars.insert({var->m_pszName,var});
 		}
