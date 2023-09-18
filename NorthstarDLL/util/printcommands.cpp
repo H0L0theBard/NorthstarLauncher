@@ -182,7 +182,7 @@ void ConCommand_findflags(const CCommand& arg)
 	for (itint->SetFirst(); itint->IsValid(); itint->Next())
 	{
 		var = itint->Get();
-		if(!var->IsFlagSet(FCVAR_DEVELOPMENTONLY) && !var->IsFlagSet(FCVAR_HIDDEN))
+		if(!var->IsFlagSet(FCVAR_DEVELOPMENTONLY) || !var->IsFlagSet(FCVAR_HIDDEN))
 		{
 			unsortedConvars.insert({var->m_pszName,var});
 		}
@@ -243,7 +243,7 @@ void ConCommand_differences(const CCommand& arg)
 	for (auto& map : sorted)
 	{
 		ConVar* cvar = R2::g_pCVar->FindVar(map.second->m_pszName);
-		if (cvar && !cvar->IsFlagSet(FCVAR_DEVELOPMENTONLY) || !cvar->IsFlagSet(FCVAR_HIDDEN))
+		if (cvar && !cvar->IsFlagSet(FCVAR_HIDDEN))
 		{
 			if (strcmp(cvar->GetString(), "FCVAR_NEVER_AS_STRING") != NULL)
 			{
