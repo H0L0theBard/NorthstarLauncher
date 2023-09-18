@@ -116,6 +116,7 @@ void ConCommand_find(const CCommand& arg)
 			unsortedConvars.insert({var->m_pszName,var});
 		}
 	}
+	delete itint; 
 
 	std::vector<std::pair<std::string, ConCommandBase*>> sorted = ConvarSort(unsortedConvars);
 
@@ -186,6 +187,7 @@ void ConCommand_findflags(const CCommand& arg)
 			unsortedConvars.insert({var->m_pszName,var});
 		}
 	}
+	delete itint; 
 
 	std::vector<std::pair<std::string, ConCommandBase*>> sorted = ConvarSort(unsortedConvars);
 	
@@ -211,6 +213,7 @@ void ConCommand_list(const CCommand& arg)
 			unsortedConvars.insert({var->m_pszName,var});
 		}
 	}
+	delete itint; 
 
 	std::vector<std::pair<std::string, ConCommandBase*>> sorted = ConvarSort(unsortedConvars);
 	
@@ -233,6 +236,7 @@ void ConCommand_differences(const CCommand& arg)
 			unsortedConvars.insert({var->m_pszName,var});
 		}
 	}
+	delete itint; 
 
 	std::vector<std::pair<std::string, ConCommandBase*>> sorted = ConvarSort(unsortedConvars);
 
