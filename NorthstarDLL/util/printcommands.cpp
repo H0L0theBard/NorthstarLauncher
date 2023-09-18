@@ -219,7 +219,7 @@ void ConCommand_list(const CCommand& arg)
 	
 	for(auto& map : sorted)
 	{
-		PrintCommandHelpDialogue(var, var->m_pszName);
+		PrintCommandHelpDialogue(map.second, map.second->m_pszName);
 	}
 }
 
