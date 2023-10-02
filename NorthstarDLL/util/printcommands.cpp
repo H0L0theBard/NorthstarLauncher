@@ -178,8 +178,6 @@ void ConCommand_findflags(const CCommand& arg)
 	}
 	delete itint;
 
-	std::vector sorted = ConvarSort(sorted);
-
 	for (auto& map : unsortedConvars)
 	{
 		if (map.second->m_nFlags & resolvedFlag)
