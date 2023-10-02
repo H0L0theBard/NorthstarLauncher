@@ -215,9 +215,7 @@ void ConCommand_list(const CCommand& arg)
 	}
 	delete itint;
 
-	std::vector<std::string, ConCommandBase*> sorted = ConvarSort(unsortedConvars);
-
-	for (auto& map : sorted)
+	for (auto& map : unsortedConvars)
 	{
 		PrintCommandHelpDialogue(map.second, map.second->m_pszName);
 	}
