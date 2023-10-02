@@ -3,16 +3,6 @@
 #include "core/convar/convar.h"
 #include "core/convar/concommand.h"
 
-std::vector<std::pair<std::string, ConCommandBase*>> ConvarSort(std::map<std::string, ConCommandBase*> map)
-{
-	std::vector<std::pair<std::string, ConCommandBase*>> sorted(map.begin(), map.end());
-	std::sort(
-		sorted.begin(),
-		sorted.end(),
-		[](std::pair<std::string, ConCommandBase*>& a, std::pair<std::string, ConCommandBase*>& b) { return a.first < b.first; });
-	return sorted;
-}
-
 void PrintCommandHelpDialogue(const ConCommandBase* command, const char* name)
 {
 	if (!command)
@@ -118,9 +108,8 @@ void ConCommand_find(const CCommand& arg)
 	}
 	delete itint;
 
-	std::vector<std::string, ConCommandBase*> sorted = ConvarSort(unsortedConvars);
 
-	for (auto& map : sorted)
+	for (auto& map : unsortedConvars)
 	{
 		bool bPrintCommand = true;
 		for (int i = 0; i < arg.ArgC() - 1; i++)
@@ -191,7 +180,7 @@ void ConCommand_findflags(const CCommand& arg)
 
 	std::vector sorted = ConvarSort(sorted);
 
-	for (auto& map : sorted)
+	for (auto& map : unsortedConvars)
 	{
 		if (map.second->m_nFlags & resolvedFlag)
 			PrintCommandHelpDialogue(map.second, map.second->m_pszName);
@@ -236,9 +225,8 @@ void ConCommand_differences(const CCommand& arg)
 	}
 	delete itint;
 
-	std::vector<std::string, ConCommandBase*> sorted = ConvarSort(unsortedConvars);
 
-	for (auto& map : sorted)
+	for (auto& map : unsortedConvars)
 	{
 		ConVar* cvar = R2::g_pCVar->FindVar(map.second->m_pszName);
 		if (cvar && !cvar->IsFlagSet(FCVAR_HIDDEN))
