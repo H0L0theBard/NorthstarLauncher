@@ -9,7 +9,7 @@ std::map<std::string, ConCommandBase*> ConvarSort(std::map<std::string, ConComma
 	std::sort(
 		sorted.begin(),
 		sorted.end(),
-		[](std::pair<std::string, ConCommandBase*>&, std::pair<std::string, ConCommandBase*>& b) { return a.first < b.first; });
+		[](std::pair<std::string, ConCommandBase*>& a, std::pair<std::string, ConCommandBase*>& b) { return a.first < b.first; });
 	return sorted;
 }
 
