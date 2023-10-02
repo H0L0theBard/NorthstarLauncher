@@ -3,13 +3,13 @@
 #include "core/convar/convar.h"
 #include "core/convar/concommand.h"
 
-std::map<std::string, ConCommandBase*> ConvarSort(std::map<std::string, ConCommandBase*> map)
+std::vector<std::string, ConCommandBase*> ConvarSort(std::map<std::string, ConCommandBase*> map)
 {
 	std::map<std::string, ConCommandBase*> sorted(map.begin(), map.end());
 	std::sort(
 		sorted.begin(),
 		sorted.end(),
-		[](std::pair<std::string, ConCommandBase*> a, std::pair<std::string, ConCommandBase*> b) { return a.first < b.first; });
+		[](std::pair<std::string, ConCommandBase*>& a, std::pair<std::string, ConCommandBase*>& b) { return a.first < b.first; });
 	return sorted;
 }
 
@@ -107,18 +107,18 @@ void ConCommand_find(const CCommand& arg)
 
 	ConCommandBase* var;
 	CCVarIteratorInternal* itint = R2::g_pCVar->FactoryInternalIterator();
-	std::map<std::string, ConCommandBase*> sorted;
+	std::map<std::string, ConCommandBase*> unsorted;
 	for (itint->SetFirst(); itint->IsValid(); itint->Next())
 	{
 		var = itint->Get();
 		if (!var->IsFlagSet(FCVAR_DEVELOPMENTONLY) || !var->IsFlagSet(FCVAR_HIDDEN))
 		{
-			sorted.insert({var->m_pszName, var});
+			unsorted.insert({var->m_pszName, var});
 		}
 	}
 	delete itint;
 
-	sorted = ConvarSort(sorted);
+	std::vector<std::string, ConCommandBase*> sorted = ConvarSort(sorted);
 
 	for (auto& map : sorted)
 	{
@@ -178,18 +178,18 @@ void ConCommand_findflags(const CCommand& arg)
 
 	ConCommandBase* var;
 	CCVarIteratorInternal* itint = R2::g_pCVar->FactoryInternalIterator();
-	std::map<std::string, ConCommandBase*> sorted;
+	std::map<std::string, ConCommandBase*> unsorted;
 	for (itint->SetFirst(); itint->IsValid(); itint->Next())
 	{
 		var = itint->Get();
 		if (!var->IsFlagSet(FCVAR_DEVELOPMENTONLY) || !var->IsFlagSet(FCVAR_HIDDEN))
 		{
-			sorted.insert({var->m_pszName, var});
+			unsorted.insert({var->m_pszName, var});
 		}
 	}
 	delete itint;
 
-	sorted = ConvarSort(sorted);
+	std::vector sorted = ConvarSort(sorted);
 
 	for (auto& map : sorted)
 	{
@@ -204,18 +204,18 @@ void ConCommand_list(const CCommand& arg)
 {
 	ConCommandBase* var;
 	CCVarIteratorInternal* itint = R2::g_pCVar->FactoryInternalIterator();
-	std::map<std::string, ConCommandBase*> sorted;
+	std::map<std::string, ConCommandBase*> unsorted;
 	for (itint->SetFirst(); itint->IsValid(); itint->Next())
 	{
 		var = itint->Get();
 		if (!var->IsFlagSet(FCVAR_DEVELOPMENTONLY) && !var->IsFlagSet(FCVAR_HIDDEN))
 		{
-			sorted.insert({var->m_pszName, var});
+			unsorted.insert({var->m_pszName, var});
 		}
 	}
 	delete itint;
 
-	sorted = ConvarSort(sorted);
+	std::vector<std::string, ConCommandBase*> sorted = ConvarSort(sorted);
 
 	for (auto& map : sorted)
 	{
@@ -227,18 +227,18 @@ void ConCommand_differences(const CCommand& arg)
 {
 	ConCommandBase* var;
 	CCVarIteratorInternal* itint = R2::g_pCVar->FactoryInternalIterator();
-	std::map<std::string, ConCommandBase*> sorted;
+	std::map<std::string, ConCommandBase*> unsorted;
 	for (itint->SetFirst(); itint->IsValid(); itint->Next())
 	{
 		var = itint->Get();
 		if (!var->IsFlagSet(FCVAR_DEVELOPMENTONLY) || !var->IsFlagSet(FCVAR_HIDDEN))
 		{
-			sorted.insert({var->m_pszName, var});
+			unsorted.insert({var->m_pszName, var});
 		}
 	}
 	delete itint;
 
-	sorted = ConvarSort(sorted);
+	std::vector<std::string, ConCommandBase*> sorted = ConvarSort(sorted);
 
 	for (auto& map : sorted)
 	{
