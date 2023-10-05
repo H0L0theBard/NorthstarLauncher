@@ -201,7 +201,6 @@ void ConCommand_list(const CCommand& arg)
 	}
 	delete itint;
 
-	spdlog::info("cvar list");
 	for (auto& map : sorted)
 	{
 		PrintCommandHelpDialogue(map.second, map.second->m_pszName);
@@ -211,13 +210,12 @@ void ConCommand_list(const CCommand& arg)
 
 void ConCommand_differences(const CCommand& arg)
 {
-	ConCommandBase* var;
 	CCVarIteratorInternal* itint = R2::g_pCVar->FactoryInternalIterator();
 	std::map<std::string, ConCommandBase*> sorted;
 
 	for (itint->SetFirst(); itint->IsValid(); itint->Next())
 	{
-		var = itint->Get();
+		ConCommandBase* var = itint->Get();
 		if (!var->IsFlagSet(FCVAR_DEVELOPMENTONLY) && !var->IsFlagSet(FCVAR_HIDDEN))
 		{
 			sorted.insert({var->m_pszName, var});
