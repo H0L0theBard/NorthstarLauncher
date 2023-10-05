@@ -207,7 +207,7 @@ void ConCommand_list(const CCommand& arg)
 	{
 		PrintCommandHelpDialogue(map.second, map.second->m_pszName);
 	}
-	spdlog::info("--------------\n%3i convars/concommands for [%s]\n", sorted.Count())
+	spdlog::info("--------------\n%3i convars/concommands for [%s]\n", sorted.Count());
 
 }
 
