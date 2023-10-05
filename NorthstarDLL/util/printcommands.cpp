@@ -201,13 +201,13 @@ void ConCommand_list(const CCommand& arg)
 	}
 	delete itint;
 
-	spdlog::info("cvar list\n--------------\n");
+	spdlog::info("cvar list");
 
 	for (auto& map : sorted)
 	{
 		PrintCommandHelpDialogue(map.second, map.second->m_pszName);
 	}
-	spdlog::info("--------------\n%3i convars/concommands for [%s]\n", sorted.size());
+	spdlog::info("%3i total convars/concommands", sorted.size());
 }
 
 void ConCommand_differences(const CCommand& arg)
