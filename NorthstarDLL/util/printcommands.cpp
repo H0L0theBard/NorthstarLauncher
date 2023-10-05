@@ -207,7 +207,7 @@ void ConCommand_list(const CCommand& arg)
 	{
 		PrintCommandHelpDialogue(map.second, map.second->m_pszName);
 	}
-	spdlog::info("%3i total convars/concommands", sorted.size());
+	spdlog::info("{} total convars/concommands", sorted.size());
 }
 
 void ConCommand_differences(const CCommand& arg)
@@ -237,6 +237,11 @@ void ConCommand_differences(const CCommand& arg)
 		}
 
 		if (!strcmp(cvar->GetString(), "FCVAR_NEVER_AS_STRING") != NULL)
+		{
+			continue;
+		}
+		
+		if (!strcmp(cvar->GetString(), cvar->m_pszDefaultValue) != NULL)
 		{
 			continue;
 		}
