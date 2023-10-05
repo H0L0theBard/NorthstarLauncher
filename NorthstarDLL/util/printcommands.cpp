@@ -207,8 +207,7 @@ void ConCommand_list(const CCommand& arg)
 	{
 		PrintCommandHelpDialogue(map.second, map.second->m_pszName);
 	}
-	spdlog::info("--------------\n%3i convars/concommands for [%s]\n", sorted.Count());
-
+	spdlog::info("--------------\n%3i convars/concommands for [%s]\n", sorted.size());
 }
 
 void ConCommand_differences(const CCommand& arg)
@@ -230,19 +229,19 @@ void ConCommand_differences(const CCommand& arg)
 	{
 		ConVar* cvar = R2::g_pCVar->FindVar(map.second->m_pszName);
 		std::string formatted =
-				fmt::format("\"{}\" = \"{}\" ( def. \"{}\" )", cvar->GetBaseName(), cvar->GetString(), cvar->m_pszDefaultValue);
+			fmt::format("\"{}\" = \"{}\" ( def. \"{}\" )", cvar->GetBaseName(), cvar->GetString(), cvar->m_pszDefaultValue);
 
 		if (cvar)
 		{
 			continue;
 		}
-		
+
 		if (strcmp(cvar->GetString(), "FCVAR_NEVER_AS_STRING") != NULL)
 		{
 			continue;
 		}
 
-		if (!cvar->IsFlagSet(FCVAR_DEVELOPMENTONLY) || !cvar->IsFlagSet(FCVAR_HIDDEN) )
+		if (!cvar->IsFlagSet(FCVAR_DEVELOPMENTONLY) || !cvar->IsFlagSet(FCVAR_HIDDEN))
 		{
 			continue;
 		}
