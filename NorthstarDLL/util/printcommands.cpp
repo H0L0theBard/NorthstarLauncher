@@ -240,24 +240,22 @@ void ConCommand_differences(const CCommand& arg)
 		{
 			continue;
 		}
-		
-		if (!strcmp(cvar->GetString(), cvar->m_pszDefaultValue) != NULL)
-		{
-			continue;
-		}
 
-		if (cvar->m_bHasMin)
+		if (strcmp(cvar->GetString(), cvar->m_pszDefaultValue) != NULL)
 		{
-			formatted.append(fmt::format(" min. {}", cvar->m_fMinVal));
-		}
+			if (cvar->m_bHasMin)
+			{
+				formatted.append(fmt::format(" min. {}", cvar->m_fMinVal));
+			}
 
-		if (cvar->m_bHasMax)
-		{
-			formatted.append(fmt::format(" max. {}", cvar->m_fMaxVal));
-		}
+			if (cvar->m_bHasMax)
+			{
+				formatted.append(fmt::format(" max. {}", cvar->m_fMaxVal));
+			}
 
-		formatted.append(fmt::format(" - {}", cvar->GetHelpText()));
-		spdlog::info(formatted);
+			formatted.append(fmt::format(" - {}", cvar->GetHelpText()));
+			spdlog::info(formatted);
+		}
 	}
 }
 
