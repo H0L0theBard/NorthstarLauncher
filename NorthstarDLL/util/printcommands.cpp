@@ -231,7 +231,7 @@ void ConCommand_differences(const CCommand& arg)
 		std::string formatted =
 			fmt::format("\"{}\" = \"{}\" ( def. \"{}\" )", cvar->GetBaseName(), cvar->GetString(), cvar->m_pszDefaultValue);
 
-		if (!cvar)
+		if (cvar)
 		{
 			continue;
 		}
