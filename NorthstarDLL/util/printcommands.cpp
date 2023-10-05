@@ -101,7 +101,7 @@ void ConCommand_find(const CCommand& arg)
 	for (itint->SetFirst(); itint->IsValid(); itint->Next())
 	{
 		var = itint->Get();
-		if (!var->IsFlagSet(FCVAR_DEVELOPMENTONLY) && !var->IsFlagSet(FCVAR_HIDDEN))
+		if (!var->IsFlagSet(FCVAR_DEVELOPMENTONLY) || !var->IsFlagSet(FCVAR_HIDDEN))
 		{
 			sorted.insert({var->m_pszName, var});
 		}
@@ -170,7 +170,7 @@ void ConCommand_findflags(const CCommand& arg)
 	for (itint->SetFirst(); itint->IsValid(); itint->Next())
 	{
 		var = itint->Get();
-		if (!var->IsFlagSet(FCVAR_DEVELOPMENTONLY) && !var->IsFlagSet(FCVAR_HIDDEN))
+		if (!var->IsFlagSet(FCVAR_DEVELOPMENTONLY) || !var->IsFlagSet(FCVAR_HIDDEN))
 		{
 			sorted.insert({var->m_pszName, var});
 		}
@@ -194,17 +194,21 @@ void ConCommand_list(const CCommand& arg)
 	for (itint->SetFirst(); itint->IsValid(); itint->Next())
 	{
 		var = itint->Get();
-		if (!var->IsFlagSet(FCVAR_DEVELOPMENTONLY) && !var->IsFlagSet(FCVAR_HIDDEN))
+		if (!var->IsFlagSet(FCVAR_DEVELOPMENTONLY) || !var->IsFlagSet(FCVAR_HIDDEN))
 		{
 			sorted.insert({var->m_pszName, var});
 		}
 	}
 	delete itint;
 
+	spdlog::info("cvar list\n--------------\n");
+
 	for (auto& map : sorted)
 	{
 		PrintCommandHelpDialogue(map.second, map.second->m_pszName);
 	}
+	spdlog::info("--------------\n%3i convars/concommands for [%s]\n", sorted.Count())
+
 }
 
 void ConCommand_differences(const CCommand& arg)
@@ -215,7 +219,7 @@ void ConCommand_differences(const CCommand& arg)
 	for (itint->SetFirst(); itint->IsValid(); itint->Next())
 	{
 		var = itint->Get();
-		if (!var->IsFlagSet(FCVAR_DEVELOPMENTONLY) && !var->IsFlagSet(FCVAR_HIDDEN))
+		if (!var->IsFlagSet(FCVAR_DEVELOPMENTONLY) || !var->IsFlagSet(FCVAR_HIDDEN))
 		{
 			sorted.insert({var->m_pszName, var});
 		}
@@ -247,6 +251,7 @@ void ConCommand_differences(const CCommand& arg)
 		{
 			formatted.append(fmt::format(" min. {}", cvar->m_fMinVal));
 		}
+
 		if (cvar->m_bHasMax)
 		{
 			formatted.append(fmt::format(" max. {}", cvar->m_fMaxVal));
