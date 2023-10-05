@@ -226,7 +226,7 @@ void ConCommand_differences(const CCommand& arg)
 	{
 		ConVar* cvar = R2::g_pCVar->FindVar(map.second->m_pszName);
 		std::string formatted =
-				fmt::format("\"{}\" = \"{}\" ( def. \"{}\" )", cvar->GetBaseName(), cvar->GetString(), cvar->m_pszDefaultValue);
+			fmt::format("\"{}\" = \"{}\" ( def. \"{}\" )", cvar->GetBaseName(), cvar->GetString(), cvar->m_pszDefaultValue);
 
 		if (cvar && !cvar->IsFlagSet(FCVAR_HIDDEN))
 		{
