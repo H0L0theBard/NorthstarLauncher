@@ -202,7 +202,6 @@ void ConCommand_list(const CCommand& arg)
 	delete itint;
 
 	spdlog::info("cvar list");
-
 	for (auto& map : sorted)
 	{
 		PrintCommandHelpDialogue(map.second, map.second->m_pszName);
@@ -231,7 +230,7 @@ void ConCommand_differences(const CCommand& arg)
 		std::string formatted =
 			fmt::format("\"{}\" = \"{}\" ( def. \"{}\" )", cvar->GetBaseName(), cvar->GetString(), cvar->m_pszDefaultValue);
 
-		if (cvar)
+		if (!cvar)
 		{
 			continue;
 		}
