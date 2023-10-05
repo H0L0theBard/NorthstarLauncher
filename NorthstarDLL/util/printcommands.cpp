@@ -225,27 +225,32 @@ void ConCommand_differences(const CCommand& arg)
 	for (auto& map : sorted)
 	{
 		ConVar* cvar = R2::g_pCVar->FindVar(map.second->m_pszName);
+		std::string formatted =
+				fmt::format("\"{}\" = \"{}\" ( def. \"{}\" )", cvar->GetBaseName(), cvar->GetString(), cvar->m_pszDefaultValue);
+
 		if (cvar && !cvar->IsFlagSet(FCVAR_HIDDEN))
 		{
-			if (strcmp(cvar->GetString(), "FCVAR_NEVER_AS_STRING") != NULL)
-			{
-				if (strcmp(cvar->GetString(), cvar->m_pszDefaultValue) != NULL)
-				{
-					std::string formatted =
-						fmt::format("\"{}\" = \"{}\" ( def. \"{}\" )", cvar->GetBaseName(), cvar->GetString(), cvar->m_pszDefaultValue);
-					if (cvar->m_bHasMin)
-					{
-						formatted.append(fmt::format(" min. {}", cvar->m_fMinVal));
-					}
-					if (cvar->m_bHasMax)
-					{
-						formatted.append(fmt::format(" max. {}", cvar->m_fMaxVal));
-					}
-					formatted.append(fmt::format(" - {}", cvar->GetHelpText()));
-					spdlog::info(formatted);
-				}
-			}
+			continue;
 		}
+		if (strcmp(cvar->GetString(), "FCVAR_NEVER_AS_STRING") != NULL)
+		{
+			continue;
+		}
+		if (strcmp(cvar->GetString(), cvar->m_pszDefaultValue) != NULL)
+		{
+			continue;
+		}
+
+		if (cvar->m_bHasMin)
+		{
+			formatted.append(fmt::format(" min. {}", cvar->m_fMinVal));
+		}
+		if (cvar->m_bHasMax)
+		{
+			formatted.append(fmt::format(" max. {}", cvar->m_fMaxVal));
+		}
+		formatted.append(fmt::format(" - {}", cvar->GetHelpText()));
+		spdlog::info(formatted);
 	}
 }
 
