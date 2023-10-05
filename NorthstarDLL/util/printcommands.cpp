@@ -214,6 +214,8 @@ void ConCommand_differences(const CCommand& arg)
 	ConCommandBase* var;
 	CCVarIteratorInternal* itint = R2::g_pCVar->FactoryInternalIterator();
 	std::map<std::string, ConCommandBase*> sorted;
+	std::string formatted = fmt::format("\"{}\" = \"{}\" ( def. \"{}\" )", cvar->GetBaseName(), cvar->GetString(), cvar->m_pszDefaultValue);
+
 	for (itint->SetFirst(); itint->IsValid(); itint->Next())
 	{
 		var = itint->Get();
@@ -227,10 +229,8 @@ void ConCommand_differences(const CCommand& arg)
 	for (auto& map : sorted)
 	{
 		ConVar* cvar = R2::g_pCVar->FindVar(map.second->m_pszName);
-		std::string formatted =
-			fmt::format("\"{}\" = \"{}\" ( def. \"{}\" )", cvar->GetBaseName(), cvar->GetString(), cvar->m_pszDefaultValue);
 
-		if (!cvar && cvar->IsFlagSet(FCVAR_HIDDEN))
+		if (!cvar)
 		{
 			continue;
 		}
