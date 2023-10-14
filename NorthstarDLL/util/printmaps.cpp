@@ -104,7 +104,9 @@ void RefreshMapList()
 	}
 
 	// get maps in game dir
-	if(!std::filesystem::exists("R2/maps")){
+	if (!std::filesystem::exists("R2/maps"))
+	{
+		spdlog::error("Failed reading maps from game directory.");
 		return;
 	}
 
