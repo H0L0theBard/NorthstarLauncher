@@ -5,10 +5,14 @@
 #include "shared/playlist.h"
 #include "core/tier0.h"
 #include "engine/r2engine.h"
-#include "shared/exploit_fixes/ns_limits.h"
+
 #include "squirrel/squirrel.h"
 #include "plugins/plugins.h"
 #include "plugins/pluginbackend.h"
+
+#include "fzzy/ckf/inputhooks.h"
+#include "fzzy/tas/tasinputhooks.h"
+#include "fzzy/speedmod.h"
 
 AUTOHOOK_INIT()
 
@@ -161,13 +165,16 @@ void, __fastcall, (CHostState* self, double flCurrentTime, float flFrameTime))
 {
 	CHostState__FrameUpdate(self, flCurrentTime, flFrameTime);
 
+	CKF_FrameUpdate(flCurrentTime, flFrameTime);
+
+	TAS_FrameUpdate(flCurrentTime, flFrameTime);
+
+	Speedmod_FrameUpdate(flCurrentTime, flFrameTime);
+
 	if (*g_pServerState == server_state_t::ss_active)
 	{
 		// update server presence
 		g_pServerPresence->RunFrame(flCurrentTime);
-
-		// update limits for frame
-		g_pServerLimits->RunFrame(flCurrentTime, flFrameTime);
 	}
 
 	// Run Squirrel message buffer

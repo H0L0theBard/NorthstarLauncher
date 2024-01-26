@@ -1,5 +1,5 @@
 #include "serverauthentication.h"
-#include "shared/exploit_fixes/ns_limits.h"
+
 #include "core/convar/cvar.h"
 #include "core/convar/convar.h"
 #include "masterserver/masterserver.h"
@@ -274,8 +274,6 @@ bool,, (CBaseClient* self, char* pName, void* pNetChannel, char bFakePlayer, voi
 	g_pServerAuthentication->AuthenticatePlayer(self, iNextPlayerUid, pNextPlayerToken);
 
 	g_pServerAuthentication->AddPlayer(self, pNextPlayerToken);
-	g_pServerLimits->AddPlayer(self);
-
 	return true;
 }
 
@@ -323,7 +321,6 @@ void,, (CBaseClient* self, uint32_t unknownButAlways1, const char* pReason, ...)
 		g_pServerAuthentication->RemovePlayerAuthData(self); // won't do anything 99% of the time, but just in case
 
 		g_pServerAuthentication->RemovePlayer(self);
-		g_pServerLimits->RemovePlayer(self);
 	}
 
 	g_pServerPresence->SetPlayerCount((int)g_pServerAuthentication->m_PlayerAuthenticationData.size());
