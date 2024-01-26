@@ -30,7 +30,7 @@ void InitialiseNorthstarPrefix()
 	}
 	else
 	{
-		NORTHSTAR_FOLDER_PREFIX = "R2Northstar";
+		NORTHSTAR_FOLDER_PREFIX = "R2Ronin";
 	}
 
 	// set the console title to show the current profile
