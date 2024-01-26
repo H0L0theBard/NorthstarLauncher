@@ -1,6 +1,7 @@
 #include "speedmod.h"
 #include "logging/sourceconsole.h"
-
+#include "core/memory.h"
+#include "core/convar/convar.h"
 uintptr_t _engineModule;
 
 float* _speedmodVelX;
@@ -11,14 +12,14 @@ int* _slideStepVelocityReduction;
 float* _slideBoostCooldown;
 int* _isInBT;
 
-MemoryAddress _invincibilityPatch1;
-MemoryAddress _invincibilityPatch2;
+CMemoryAddress _invincibilityPatch1;
+CMemoryAddress _invincibilityPatch2;
 
-MemoryAddress _sideJumpPatch1;
-MemoryAddress _sideJumpPatch2;
+CMemoryAddress _sideJumpPatch1;
+CMemoryAddress _sideJumpPatch2;
 
-MemoryAddress _frictionPatch1;
-MemoryAddress _frictionPatch2;
+CMemoryAddress _frictionPatch1;
+CMemoryAddress _frictionPatch2;
 
 ConVar* Cvar_fzzy_enableSpeedmod;
 
@@ -134,14 +135,14 @@ ON_DLL_LOAD_CLIENT("engine.dll", SpeedmodEngineHooks, (CModule module))
 
 ON_DLL_LOAD_CLIENT("client.dll", SpeedmodClientHooks, (CModule module))
 {
-	_speedmodVelX = module.Offset(0xB34C2C).As<float*>();
-	_speedmodVelY = module.Offset(0xB34C30).As<float*>();
-	_lurchMax = module.Offset(0x11B0308).As<float*>();
-	_slideStepVelocityReduction = module.Offset(0x11B0D28).As<int*>();
-	_slideBoostCooldown = module.Offset(0x11B3AD8).As<float*>();
+	_speedmodVelX = module.Offset(0xB34C2C).RCast<float*>();
+	_speedmodVelY = module.Offset(0xB34C30).RCast<float*>();
+	_lurchMax = module.Offset(0x11B0308).RCast<float*>();
+	_slideStepVelocityReduction = module.Offset(0x11B0D28).RCast<int*>();
+	_slideBoostCooldown = module.Offset(0x11B3AD8).RCast<float*>();
 	_frictionPatch1 = module.Offset(0x20D6E5);
 	_sideJumpPatch1 = module.Offset(0x201017);
-	_isInBT = module.Offset(0x21720F0).As<int*>();
+	_isInBT = module.Offset(0x21720F0).RCast<int*>();
 }
 
 ON_DLL_LOAD_CLIENT("server.dll", SpeedmodServerHooks, (CModule module))
@@ -151,5 +152,5 @@ ON_DLL_LOAD_CLIENT("server.dll", SpeedmodServerHooks, (CModule module))
 	_frictionPatch2 = module.Offset(0x185D36);
 	_sideJumpPatch2 = module.Offset(0x1737A6);
 
-	_isSpeedmodEnabled = module.Offset(0x433740).As<bool*>();
+	_isSpeedmodEnabled = module.Offset(0x433740).RCast<bool*>();
 }

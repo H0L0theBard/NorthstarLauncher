@@ -13,7 +13,7 @@ static FRICTIONHOOK hookedFriction = nullptr;
 float* _velX;
 float* _velY;
 float* _velZ;
-MemoryAddress _yaw;
+CMemoryAddress _yaw;
 float* _timescale;
 bool* _onGround;
 bool* _sprint;
@@ -59,7 +59,7 @@ float* getYaw() {
 	{
 		return 0;
 	}
-	float* addr = _yaw.Deref().Offset(0x1EAC).As<float*>();
+	float* addr = _yaw.Deref().Offset(0x1EAC).RCast<float*>();
 	return addr;
 }
 
@@ -455,10 +455,10 @@ void TASProcessXInput(XINPUT_STATE*& pState)
 
 ON_DLL_LOAD_CLIENT("client.dll", TASClientHooks, (CModule module))
 {
-	_velX = module.Offset(0xB34C2C).As<float*>();
-	_velY = module.Offset(0xB34C30).As<float*>();
-	_velZ = module.Offset(0xB34C34).As<float*>();
-	_onGround = module.Offset(0x11EED78).As<bool*>();
+	_velX = module.Offset(0xB34C2C).RCast<float*>();
+	_velY = module.Offset(0xB34C30).RCast<float*>();
+	_velZ = module.Offset(0xB34C34).RCast<float*>();
+	_onGround = module.Offset(0x11EED78).RCast<bool*>();
 	_yaw = module.Offset(0xB18748);
 
 	Cvar_fzzy_enableTas = new ConVar("fzzy_enableTas", "0", FCVAR_NONE, "Controls whether TAS tools will override inputs");
@@ -466,6 +466,6 @@ ON_DLL_LOAD_CLIENT("client.dll", TASClientHooks, (CModule module))
 
 ON_DLL_LOAD_CLIENT("engine.dll", TASEngineHooks, (CModule module))
 {
-	_timescale = module.Offset(0x1315A2C8).As<float*>();
-	_sprint = module.Offset(0x1396CAB8).As<bool*>();
+	_timescale = module.Offset(0x1315A2C8).RCast<float*>();
+	_sprint = module.Offset(0x1396CAB8).RCast<bool*>();
 }
