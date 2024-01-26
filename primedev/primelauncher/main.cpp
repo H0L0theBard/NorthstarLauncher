@@ -258,15 +258,6 @@ bool ShouldLoadNorthstar(int argc, char* argv[])
 		if (!strcmp(argv[i], "-nonorthstardll"))
 			return false;
 
-	auto runNorthstarFile = std::ifstream("run_northstar.txt");
-	if (runNorthstarFile)
-	{
-		std::stringstream runNorthstarFileBuffer;
-		runNorthstarFileBuffer << runNorthstarFile.rdbuf();
-		runNorthstarFile.close();
-		if (runNorthstarFileBuffer.str().starts_with("0"))
-			return false;
-	}
 	return true;
 }
 
@@ -274,39 +265,13 @@ bool LoadNorthstar()
 {
 	FARPROC Hook_Init = nullptr;
 	{
-		std::string strProfile = "R2Northstar";
-		char* clachar = strstr(GetCommandLineA(), "-profile=");
-		if (clachar)
-		{
-			std::string cla = std::string(clachar);
-			if (strncmp(cla.substr(9, 1).c_str(), "\"", 1))
-			{
-				size_t space = cla.find(" ");
-				std::string dirname = cla.substr(9, space - 9);
-				std::cout << "[*] Found profile in command line arguments: " << dirname << std::endl;
-				strProfile = dirname.c_str();
-			}
-			else
-			{
-				std::string quote = "\"";
-				size_t quote1 = cla.find(quote);
-				size_t quote2 = (cla.substr(quote1 + 1)).find(quote);
-				std::string dirname = cla.substr(quote1 + 1, quote2);
-				std::cout << "[*] Found profile in command line arguments: " << dirname << std::endl;
-				strProfile = dirname;
-			}
-		}
-		else
-		{
-			std::cout << "[*] Profile was not found in command line arguments. Using default: R2Northstar" << std::endl;
-			strProfile = "R2Northstar";
-		}
+		std::string strProfile = "R2Ronin";
 
 		// Check if "Northstar.dll" exists in profile directory, if it doesnt fall back to root
-		swprintf_s(buffer, L"%s\\%s\\Northstar.dll", exePath, std::wstring(strProfile.begin(), strProfile.end()).c_str());
+		swprintf_s(buffer, L"%s\\%s\\Ronin.dll", exePath, std::wstring(strProfile.begin(), strProfile.end()).c_str());
 
 		if (!fs::exists(fs::path(buffer)))
-			swprintf_s(buffer, L"%s\\Northstar.dll", exePath);
+			swprintf_s(buffer, L"%s\\Ronin.dll", exePath);
 
 		std::wcout << L"[*] Using: " << buffer << std::endl;
 
@@ -315,7 +280,7 @@ bool LoadNorthstar()
 			Hook_Init = GetProcAddress(hHookModule, "InitialiseNorthstar");
 		if (!hHookModule || Hook_Init == nullptr)
 		{
-			LibraryLoadError(GetLastError(), L"Northstar.dll", buffer);
+			LibraryLoadError(GetLastError(), L"Ronin.dll", buffer);
 			return false;
 		}
 	}
@@ -446,7 +411,7 @@ int main(int argc, char* argv[])
 		bool loadNorthstar = ShouldLoadNorthstar(argc, argv);
 		if (loadNorthstar)
 		{
-			std::cout << "[*] Loading Northstar" << std::endl;
+			std::cout << "[*] Loading Ronin" << std::endl;
 			if (!LoadNorthstar())
 				return 1;
 		}

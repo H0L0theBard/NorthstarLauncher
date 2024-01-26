@@ -191,6 +191,6 @@ target_compile_definitions(
 set_target_properties(
     NorthstarDLL
     PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${NS_BINARY_DIR}
-               OUTPUT_NAME Northstar
+               OUTPUT_NAME Ronin
                LINK_FLAGS "/MANIFEST:NO /DEBUG"
     )
