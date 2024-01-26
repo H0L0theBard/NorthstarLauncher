@@ -184,6 +184,7 @@ namespace NS::Colors
 	extern Color NATIVE_ENGINE;
 	extern Color FILESYSTEM;
 	extern Color RPAK;
+	extern Color FZZY;
 	extern Color NORTHSTAR;
 	extern Color ECHO;
 	extern Color PLUGINSYS;

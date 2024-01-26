@@ -11,6 +11,7 @@ namespace NS::Colors
 	Color NATIVE_ENGINE	(252, 133, 153);
 	Color FILESYSTEM	(0  , 150, 150);
 	Color RPAK			(255, 190, 0  );
+	Color FZZY (246, 180, 194);
 	Color NORTHSTAR		(66 , 72 , 128);
 	Color ECHO			(150, 150, 159);
 	Color PLUGINSYS		(244, 60 , 14);

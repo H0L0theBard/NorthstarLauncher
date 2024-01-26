@@ -31,6 +31,8 @@ namespace NS::log
 	std::shared_ptr<ColoredLogger> echo;
 
 	std::shared_ptr<ColoredLogger> NORTHSTAR;
+	std::shared_ptr<ColoredLogger> FZZY;
+
 	std::shared_ptr<ColoredLogger> PLUGINSYS;
 }; // namespace NS::log
 
@@ -197,6 +199,7 @@ void InitialiseLogging()
 	NS::log::fs = std::make_shared<ColoredLogger>("FILESYSTM", NS::Colors::FILESYSTEM);
 	NS::log::rpak = std::make_shared<ColoredLogger>("RPAK_FSYS", NS::Colors::RPAK);
 	NS::log::echo = std::make_shared<ColoredLogger>("ECHO", NS::Colors::ECHO);
+	NS::log::FZZY = std::make_shared<ColoredLogger>("FZZY", NS::Colors::NATIVE_ENGINE);
 
 	NS::log::PLUGINSYS = std::make_shared<ColoredLogger>("PLUGINSYS", NS::Colors::PLUGINSYS);
 
@@ -208,7 +211,7 @@ void InitialiseLogging()
 	loggers.push_back(NS::log::NATIVE_CL);
 	loggers.push_back(NS::log::NATIVE_SV);
 	loggers.push_back(NS::log::NATIVE_EN);
-
+	loggers.push_back(NS::log::FZZY);
 	loggers.push_back(NS::log::PLUGINSYS);
 
 	loggers.push_back(NS::log::fs);
@@ -237,7 +240,7 @@ RtlGetVersion_type RtlGetVersion;
 
 void StartupLog()
 {
-	spdlog::info("NorthstarLauncher version: {}", version);
+	spdlog::info("RoninLauncher version: {}", version);
 	spdlog::info("Command line: {}", GetCommandLineA());
 	spdlog::info("Using profile: {}", GetNorthstarPrefix());
 
