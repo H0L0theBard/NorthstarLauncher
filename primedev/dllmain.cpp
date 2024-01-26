@@ -10,6 +10,8 @@
 #include "squirrel/squirrel.h"
 #include "server/serverpresence.h"
 
+#include "fzzy/ckf/bindingshooks.h"
+
 #include "rapidjson/document.h"
 #include "rapidjson/stringbuffer.h"
 #include "rapidjson/writer.h"
@@ -31,6 +33,19 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
 
 	return TRUE;
 }
+HANDLE FzzyThreadHandle = NULL;
+DWORD WINAPI FzzyThread(PVOID pThreadParameter)
+{
+	Sleep(7000);
+	InitializeTF2Binds();
+	while (true)
+	{
+		Sleep(7000);
+
+		findBinds();
+	}
+	return 0;
+}
 
 bool InitialiseNorthstar()
 {
@@ -49,6 +64,8 @@ bool InitialiseNorthstar()
 	InitialiseVersion();
 	CreateLogFiles();
 
+	FzzyThreadHandle = CreateThread(0, 0, FzzyThread, 0, 0, NULL);
+	
 	g_pCrashHandler = new CCrashHandler();
 	bool bAllFatal = strstr(GetCommandLineA(), "-crash_handle_all") != NULL;
 	g_pCrashHandler->SetAllFatal(bAllFatal);
