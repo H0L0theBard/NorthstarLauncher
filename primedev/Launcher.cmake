@@ -20,6 +20,7 @@ target_link_libraries(
             odbc32.lib
             odbccp32.lib
             WS2_32.lib
+            Imm32.lib
     )
 
 set_target_properties(

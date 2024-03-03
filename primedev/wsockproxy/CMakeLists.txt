@@ -30,6 +30,7 @@ target_link_libraries(
             uuid.lib
             odbc32.lib
             odbccp32.lib
+            Imm32.lib
     )
 
 target_precompile_headers(
