@@ -795,7 +795,7 @@ ON_DLL_LOAD_RELIESON("client.dll", ClientSquirrel, ConCommand, (CModule module))
 
 	// Message buffer stuff
 	g_pSquirrel<ScriptContext::UI>->messageBuffer = g_pSquirrel<ScriptContext::CLIENT>->messageBuffer;
-	g_pSquirrel<ScriptContext::CLIENT>->__sq_getfunction = module.Offset(0x572FB0).RCast<sq_getfunctionType>();
+	g_pSquirrel<ScriptContext::CLIENT>->__sq_getfunction = module.Offset(0x6CB0).RCast<sq_getfunctionType>();
 	g_pSquirrel<ScriptContext::UI>->__sq_getfunction = g_pSquirrel<ScriptContext::CLIENT>->__sq_getfunction;
 	g_pSquirrel<ScriptContext::CLIENT>->__sq_stackinfos = module.Offset(0x35970).RCast<sq_stackinfosType>();
 	g_pSquirrel<ScriptContext::UI>->__sq_stackinfos = g_pSquirrel<ScriptContext::CLIENT>->__sq_stackinfos;
@@ -836,9 +836,6 @@ ON_DLL_LOAD_RELIESON("client.dll", ClientSquirrel, ConCommand, (CModule module))
 
 	StubUnsafeSQFuncs<ScriptContext::CLIENT>();
 	StubUnsafeSQFuncs<ScriptContext::UI>();
-
-	g_pSquirrel<ScriptContext::CLIENT>->__sq_getfunction = module.Offset(0x6CB0).RCast<sq_getfunctionType>();
-	g_pSquirrel<ScriptContext::UI>->__sq_getfunction = g_pSquirrel<ScriptContext::CLIENT>->__sq_getfunction;
 
 	SquirrelFunctions s = {};
 	g_pSquirrel<ScriptContext::CLIENT>->GenerateSquirrelFunctionsStruct(&s);

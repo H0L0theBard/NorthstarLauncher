@@ -94,6 +94,8 @@ add_library(
     "mods/modmanager.h"
     "mods/modsavefiles.cpp"
     "mods/modsavefiles.h"
+	"mods/modtimer.h"
+	"mods/modtimer.cpp"
     "plugins/plugin_abi.h"
     "plugins/pluginbackend.cpp"
     "plugins/pluginbackend.h"
