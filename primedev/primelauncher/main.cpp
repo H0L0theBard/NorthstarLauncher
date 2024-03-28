@@ -290,7 +290,7 @@ bool LoadNorthstar()
 		}
 		else
 		{
-			std::cout << "[*] Profile was not found in command line arguments. Using default: R2Northstar" << std::endl;
+			std::cout << "[*] Profile was not found in command line arguments. Using default: R2Ronin" << std::endl;
 			strProfile = "R2Ronin";
 		}
 

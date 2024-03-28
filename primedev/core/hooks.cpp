@@ -179,6 +179,8 @@ void AddDllLoadCallback(std::string dll, DllLoadCallbackFuncType callback, std::
 {
 	DllLoadCallback& callbackStruct = GetDllLoadCallbacks().emplace_back();
 
+	spdlog::info("adding dll load callback with tag {}", tag);
+
 	callbackStruct.dll = dll;
 	callbackStruct.callback = callback;
 	callbackStruct.tag = tag;
@@ -287,6 +289,8 @@ void CallLoadLibraryACallbacks(LPCSTR lpLibFileName, HMODULE moduleAddress)
 {
 	CModule cModule(moduleAddress);
 
+	spdlog::info("Loaded DLL {}", fs::path(lpLibFileName).filename().string());
+
 	while (true)
 	{
 		bool bDoneCalling = true;
@@ -303,6 +307,7 @@ void CallLoadLibraryACallbacks(LPCSTR lpLibFileName, HMODULE moduleAddress)
 					{
 						if (std::find(calledTags.begin(), calledTags.end(), tag) == calledTags.end())
 						{
+							spdlog::info("hook named {} gonna hold up queue!", callbackStruct.tag);
 							bDoneCalling = false;
 							bShouldContinue = true;
 							break;
@@ -313,6 +318,7 @@ void CallLoadLibraryACallbacks(LPCSTR lpLibFileName, HMODULE moduleAddress)
 				if (bShouldContinue)
 					continue;
 
+				//spdlog::info("calling hook named {}", callbackStruct.tag);
 				callbackStruct.callback(moduleAddress);
 				calledTags.push_back(callbackStruct.tag);
 				callbackStruct.called = true;
@@ -320,7 +326,10 @@ void CallLoadLibraryACallbacks(LPCSTR lpLibFileName, HMODULE moduleAddress)
 		}
 
 		if (bDoneCalling)
+		{
+			spdlog::info("done!");
 			break;
+		}
 	}
 }
 
@@ -328,6 +337,8 @@ void CallLoadLibraryWCallbacks(LPCWSTR lpLibFileName, HMODULE moduleAddress)
 {
 	CModule cModule(moduleAddress);
 
+	spdlog::info("Loaded DLL {}", fs::path(lpLibFileName).filename().string());
+
 	while (true)
 	{
 		bool bDoneCalling = true;
@@ -344,6 +355,7 @@ void CallLoadLibraryWCallbacks(LPCWSTR lpLibFileName, HMODULE moduleAddress)
 					{
 						if (std::find(calledTags.begin(), calledTags.end(), tag) == calledTags.end())
 						{
+							spdlog::info("hook named {} gonna hold up queue!", callbackStruct.tag);
 							bDoneCalling = false;
 							bShouldContinue = true;
 							break;
@@ -354,6 +366,7 @@ void CallLoadLibraryWCallbacks(LPCWSTR lpLibFileName, HMODULE moduleAddress)
 				if (bShouldContinue)
 					continue;
 
+				//spdlog::info("calling hook named {}", callbackStruct.tag);
 				callbackStruct.callback(moduleAddress);
 				calledTags.push_back(callbackStruct.tag);
 				callbackStruct.called = true;
@@ -361,7 +374,10 @@ void CallLoadLibraryWCallbacks(LPCWSTR lpLibFileName, HMODULE moduleAddress)
 		}
 
 		if (bDoneCalling)
+		{
+			spdlog::info("done!");
 			break;
+		}
 	}
 }
 

@@ -3,7 +3,6 @@
 
 #include "squirrel/squirrel.h"
 #include "plugins.h"
-#include "masterserver/masterserver.h"
 #include "core/convar/convar.h"
 #include "server/serverpresence.h"
 #include <optional>

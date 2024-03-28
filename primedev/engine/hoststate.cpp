@@ -1,5 +1,4 @@
 #include "engine/hoststate.h"
-#include "masterserver/masterserver.h"
 #include "server/auth/serverauthentication.h"
 #include "server/serverpresence.h"
 #include "shared/playlist.h"
@@ -165,11 +164,11 @@ void, __fastcall, (CHostState* self, double flCurrentTime, float flFrameTime))
 {
 	CHostState__FrameUpdate(self, flCurrentTime, flFrameTime);
 
-	CKF_FrameUpdate(flCurrentTime, flFrameTime);
+	/* CKF_FrameUpdate(flCurrentTime, flFrameTime);
 
 	TAS_FrameUpdate(flCurrentTime, flFrameTime);
 
-	Speedmod_FrameUpdate(flCurrentTime, flFrameTime);
+	Speedmod_FrameUpdate(flCurrentTime, flFrameTime); */
 
 	if (*g_pServerState == server_state_t::ss_active)
 	{

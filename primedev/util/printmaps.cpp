@@ -212,6 +212,9 @@ AUTOHOOK(Host_Map_f, engine.dll + 0x15B340, void, __fastcall, (const CCommand& a
 		return;
 	}
 
+	// for modtimer save file loading detection :]
+	g_pSquirrel<ScriptContext::UI>->Call("CodeCallback_SetLoadedSaveFile", " ");
+
 	if (*g_pServerState >= server_state_t::ss_active)
 		return Host_Changelevel_f(args);
 	else

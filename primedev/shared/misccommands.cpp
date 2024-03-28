@@ -5,7 +5,6 @@
 #include "client/r2client.h"
 #include "core/tier0.h"
 #include "engine/hoststate.h"
-#include "masterserver/masterserver.h"
 #include "mods/modmanager.h"
 #include "server/auth/serverauthentication.h"
 #include "squirrel/squirrel.h"
@@ -21,9 +20,6 @@ void ConCommand_force_newgame(const CCommand& arg)
 
 void ConCommand_ns_start_reauth_and_leave_to_lobby(const CCommand& arg)
 {
-	// hack for special case where we're on a local server, so we erase our own newly created auth data on disconnect
-	g_pMasterServerManager->m_bNewgameAfterSelfAuth = true;
-	g_pMasterServerManager->AuthenticateWithOwnServer(g_pLocalPlayerUserID, g_pMasterServerManager->m_sOwnClientAuthToken);
 }
 
 void ConCommand_ns_end_reauth_and_leave_to_lobby(const CCommand& arg)
