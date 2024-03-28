@@ -12,9 +12,9 @@ AUTOHOOK(ChangeLevel, server.dll + 0x2772b0, SQRESULT, __fastcall, (HSquirrelVM*
 	std::chrono::time_point point = std::chrono::steady_clock::now();
 	// this is only a call since we need it synced.
 	// we prefer asynccall because it is more stable.
-	g_pSquirrel<ScriptContext::UI>->Call("CodeCallback_ShouldChangeLevel", targetLevel);
+	SQRESULT result = g_pSquirrel<ScriptContext::UI>->Call("CodeCallback_ShouldChangeLevel", targetLevel);
 	spdlog::info((std::chrono::steady_clock::now() - point).count() / 1000 + "ms");
-	if (shouldChangeLevel)
+	if (shouldChangeLevel || result == SQRESULT_ERROR)
 	{
 		shouldChangeLevel = false;
 		return ChangeLevel(sqvm);
@@ -24,7 +24,7 @@ AUTOHOOK(ChangeLevel, server.dll + 0x2772b0, SQRESULT, __fastcall, (HSquirrelVM*
 
 AUTOHOOK(LoadSavedGame, engine.dll + 0x166130, void, __fastcall, (CCommand & command))
 {
-	g_pSquirrel<ScriptContext::UI>->AsyncCall("CodeCallback_SetLoadedSaveFile", command.ArgS());
+	g_pSquirrel<ScriptContext::UI>->Call("CodeCallback_SetLoadedSaveFile", command.ArgS());
 	LoadSavedGame(command);
 }
 
