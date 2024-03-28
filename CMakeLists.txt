@@ -22,8 +22,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_VS_PLATFORM_TOOLSET v143)
 
 # This determines the real binary root directory
-# set(NS_BINARY_DIR ${CMAKE_BINARY_DIR}/game)
-set(NS_BINARY_DIR "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Titanfall2")
+set(NS_BINARY_DIR ${CMAKE_BINARY_DIR}/game)
+# set(NS_BINARY_DIR "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Titanfall2")
 # NOTE [Fifty]: Visual studio deems Build root with the value "${projectDir}" in CMakeSettings.json as invalid and
 # defaults to using a temporary dir somewhere in %USER%/CMakeBuilds. To combat this we set it to "${projectDir}/build"
 # and then link binaries in ${CMAKE_BINARY_DIR}/game. This means you can copy your game into ${CMAKE_BINARY_DIR}/game
