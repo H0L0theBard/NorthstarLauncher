@@ -199,7 +199,7 @@ void InitialiseLogging()
 	NS::log::fs = std::make_shared<ColoredLogger>("FILESYSTM", NS::Colors::FILESYSTEM);
 	NS::log::rpak = std::make_shared<ColoredLogger>("RPAK_FSYS", NS::Colors::RPAK);
 	NS::log::echo = std::make_shared<ColoredLogger>("ECHO", NS::Colors::ECHO);
-	NS::log::FZZY = std::make_shared<ColoredLogger>("FZZY", NS::Colors::NATIVE_ENGINE);
+	NS::log::FZZY = std::make_shared<ColoredLogger>("FZZY SHIT", NS::Colors::NATIVE_ENGINE);
 
 	NS::log::PLUGINSYS = std::make_shared<ColoredLogger>("PLUGINSYS", NS::Colors::PLUGINSYS);
 

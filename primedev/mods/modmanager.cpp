@@ -2,7 +2,6 @@
 #include "core/convar/convar.h"
 #include "core/convar/concommand.h"
 #include "client/audio.h"
-#include "masterserver/masterserver.h"
 #include "core/filesystem/filesystem.h"
 #include "core/filesystem/rpakfilesystem.h"
 #include "config/profile.h"
@@ -1038,7 +1037,6 @@ void ModManager::LoadMods()
 	buffer.Clear();
 	rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
 	modinfoDoc.Accept(writer);
-	g_pMasterServerManager->m_sOwnModInfoJson = std::string(buffer.GetString());
 
 	m_bHasLoadedMods = true;
 }
@@ -1142,7 +1140,7 @@ fs::path GetCompiledAssetsPath()
 	return fs::path(GetNorthstarPrefix() + COMPILED_ASSETS_SUFFIX);
 }
 
-ON_DLL_LOAD_RELIESON("engine.dll", ModManager, (ConCommand, MasterServer), (CModule module))
+ON_DLL_LOAD_RELIESON("engine.dll", ModManager, (ConCommand), (CModule module))
 {
 	g_pModManager = new ModManager;
 

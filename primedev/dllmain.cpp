@@ -36,6 +36,7 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
 HANDLE FzzyThreadHandle = NULL;
 DWORD WINAPI FzzyThread(PVOID pThreadParameter)
 {
+	return 0;
 	Sleep(7000);
 	InitializeTF2Binds();
 	while (true)
@@ -72,12 +73,15 @@ bool InitialiseNorthstar()
 
 	// determine if we are in vanilla-compatibility mode
 	g_pVanillaCompatibility = new VanillaCompatibility();
-	g_pVanillaCompatibility->SetVanillaCompatibility(strstr(GetCommandLineA(), "-vanilla") != NULL);
+	//g_pVanillaCompatibility->SetVanillaCompatibility(strstr(GetCommandLineA(), "-vanilla") != NULL);
+	g_pVanillaCompatibility->SetVanillaCompatibility(true);
 
 	// Write launcher version to log
 	StartupLog();
 
 	InstallInitialHooks();
+
+	NS::log::NORTHSTAR->log(spdlog::level::info, "cock and balls");
 
 	g_pServerPresence = new ServerPresenceManager();
 
@@ -93,7 +97,9 @@ bool InitialiseNorthstar()
 	curl_global_init_mem(CURL_GLOBAL_DEFAULT, _malloc_base, _free_base, _realloc_base, _strdup_base, _calloc_base);
 
 	// run callbacks for any libraries that are already loaded by now
+	NS::log::NORTHSTAR->log(spdlog::level::info, "cock and balls 3");
 	CallAllPendingDLLLoadCallbacks();
+	NS::log::NORTHSTAR->log(spdlog::level::info, "cock and balls 2");
 
 	return true;
 }

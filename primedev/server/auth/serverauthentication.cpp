@@ -2,7 +2,6 @@
 
 #include "core/convar/cvar.h"
 #include "core/convar/convar.h"
-#include "masterserver/masterserver.h"
 #include "server/serverpresence.h"
 #include "engine/hoststate.h"
 #include "bansystem.h"
@@ -189,15 +188,6 @@ bool ServerAuthenticationManager::RemovePlayerAuthData(CBaseClient* pPlayer)
 
 void ServerAuthenticationManager::WritePersistentData(CBaseClient* pPlayer)
 {
-	if (pPlayer->m_iPersistenceReady == ePersistenceReady::READY_REMOTE)
-	{
-		g_pMasterServerManager->WritePlayerPersistentData(
-			pPlayer->m_UID, (const char*)pPlayer->m_PersistenceBuffer, m_PlayerAuthenticationData[pPlayer].pdataSize);
-	}
-	else if (Cvar_ns_auth_allow_insecure_write->GetBool())
-	{
-		// todo: write pdata to disk here
-	}
 }
 
 // auth hooks

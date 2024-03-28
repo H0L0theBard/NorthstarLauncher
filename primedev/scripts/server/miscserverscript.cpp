@@ -1,5 +1,4 @@
 #include "squirrel/squirrel.h"
-#include "masterserver/masterserver.h"
 #include "server/auth/serverauthentication.h"
 #include "dedicated/dedicated.h"
 #include "client/r2client.h"
@@ -32,7 +31,7 @@ ADD_SQFUNC("void", NSEarlyWritePlayerPersistenceForLeave, "entity player", "", S
 
 ADD_SQFUNC("bool", NSIsWritingPlayerPersistence, "", "", ScriptContext::SERVER)
 {
-	g_pSquirrel<context>->pushbool(sqvm, g_pMasterServerManager->m_bSavingPersistentData);
+	g_pSquirrel<context>->pushbool(sqvm, false);
 	return SQRESULT_NOTNULL;
 }
 
